@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>55 歲後的第二人生 — 健康2.0 受眾分析</title>
+<style>
+:root{
+  --paper:#FBFAF7; --ink:#191817; --sub:#4A4843; --faint:#8C877D;
+  --line:#E4DFD5; --pine:#1C4E40; --pine-soft:#EAF0EC; --track:#ECE8DF;
+  --serif:Georgia,"Songti TC","Noto Serif TC","Source Han Serif TC",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.page{max-width:880px;margin:0 auto;padding:64px 40px 80px}
+@media(max-width:640px){.page{padding:40px 22px 60px}}
+
+.masthead{border-bottom:2px solid var(--ink);padding-bottom:26px}
+.kicker{font-size:13px;color:var(--pine);font-weight:600;margin:0 0 18px}
+h1{font-family:var(--serif);font-weight:700;font-size:46px;line-height:1.12;letter-spacing:-.01em;margin:0 0 16px}
+@media(max-width:640px){h1{font-size:32px}}
+.dek{font-size:16px;line-height:1.65;color:var(--sub);max-width:52ch;margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:28px;margin-top:26px}
+.meta div{font-size:13px;color:var(--faint);line-height:1.5}
+.meta b{display:block;font-family:var(--serif);font-size:20px;color:var(--ink);font-weight:700;margin-top:2px}
+
+.sec{margin-top:60px}
+.sec-h{font-family:var(--serif);font-size:15px;font-weight:700;color:var(--pine);margin:0 0 4px}
+.sec-rule{height:1px;background:var(--line);margin:14px 0 0}
+
+/* findings */
+.finding{padding:38px 0;border-bottom:1px solid var(--line)}
+.finding:first-of-type{padding-top:34px}
+.fq{font-family:var(--serif);font-size:14px;color:var(--pine);font-weight:700;margin:0 0 8px}
+.finding h3{font-family:var(--serif);font-size:27px;font-weight:700;line-height:1.3;margin:0 0 20px}
+@media(max-width:640px){.finding h3{font-size:22px}}
+.lead{display:flex;align-items:baseline;gap:16px;margin:0 0 16px;flex-wrap:wrap}
+.big{font-family:var(--serif);font-weight:700;font-size:72px;line-height:.85;color:var(--pine);letter-spacing:-.02em}
+@media(max-width:640px){.big{font-size:56px}}
+.lead-t{font-size:18px;font-weight:600;color:var(--ink);line-height:1.4}
+.analysis{font-size:15.5px;line-height:1.72;color:var(--sub);margin:0 0 16px;max-width:60ch}
+.analysis .n{color:var(--ink);font-weight:600}
+.concl{font-size:16px;line-height:1.6;color:var(--ink);margin:0;padding-left:16px;border-left:3px solid var(--pine);max-width:58ch}
+.concl b{font-weight:700}
+.substat{display:flex;flex-wrap:wrap;gap:0 32px;margin:18px 0 0;padding:16px 0 0;border-top:1px dotted var(--line)}
+.substat div{font-size:13.5px;color:var(--faint);line-height:1.5;margin-bottom:6px}
+.substat b{font-family:var(--serif);color:var(--ink);font-size:17px;font-weight:700;margin-right:6px}
+
+/* takeaway */
+.takeaway{background:var(--pine);color:#fff;border-radius:5px;padding:38px 34px;margin-top:26px}
+.takeaway .tk-h{font-size:13px;color:#A9C6BC;font-weight:600;margin:0 0 14px}
+.takeaway p{font-family:var(--serif);font-size:24px;line-height:1.5;margin:0;font-weight:500}
+@media(max-width:640px){.takeaway{padding:28px 22px}.takeaway p{font-size:20px}}
+
+/* data */
+.q{margin-top:36px}
+.q-h{font-size:13px;color:var(--faint);margin:0 0 3px}
+.q-t{font-size:17px;font-weight:650;margin:0 0 18px;line-height:1.4}
+.bar-row{margin:0 0 13px}
+.bar-top{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;margin-bottom:6px;gap:16px}
+.bar-label{color:var(--ink);line-height:1.4}
+.bar-val{white-space:nowrap;color:var(--sub)}
+.bar-val b{font-family:var(--serif);font-size:16px;color:var(--ink);font-weight:700;margin-left:8px}
+.track{height:8px;background:var(--track);border-radius:4px;overflow:hidden}
+.fill{height:100%;background:var(--pine);border-radius:4px}
+
+.foot{margin-top:66px;padding-top:22px;border-top:2px solid var(--ink);font-size:13px;color:var(--faint);line-height:1.7}
+.foot .src{color:var(--sub)}
+.foot .brand{font-family:var(--serif);font-weight:700;color:var(--ink);font-size:15px;margin-top:10px}
+
+@media print{
+  body{background:#fff}
+  .page{padding:24px 0;max-width:100%}
+  .finding,.q,.takeaway{break-inside:avoid}
+  .takeaway{background:var(--pine)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .fill{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sec{margin-top:34px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="masthead">
+    <p class="kicker">健康2.0 站內問卷・受眾分析</p>
+    <h1>55 歲後的第二人生，<br>你想怎麼過？</h1>
+    <p class="dek">我們想弄清楚三件事：健康2.0 的用戶是不是退休中？他們理財規劃好了嗎？還有什麼沒被滿足的需求？1,621 人的答案如下。</p>
+    <div class="meta">
+      <div>回收份數<b>1,621 份</b></div>
+      <div>目標份數<b>1,000 份</b></div>
+      <div>作答期間<b>2026.08.25–09.05</b></div>
+    </div>
+  </header>
+
+  <section class="sec">
+    <h2 class="sec-h">三個問題，三個答案</h2>
+    <div class="sec-rule"></div>
+
+    <div class="finding">
+      <p class="fq">問題一</p>
+      <h3>健康2.0 的人，是不是退休中？</h3>
+      <div class="lead"><span class="big">58%</span><span class="lead-t">已經退休，或 5 年內就要退休</span></div>
+      <p class="analysis">其中 <span class="n">32%</span> 已經退休、<span class="n">26%</span> 五年內就要退休；另有 27% 還在路上、15% 還沒認真想。也就是說，接近六成的人正處在「退休這道門」的前後。</p>
+      <p class="concl"><b>結論：</b>這不是「已退休老人」的受眾，而是<b>正在跨過退休門檻</b>的人——退休財務的決策，就發生在此刻。</p>
+    </div>
+
+    <div class="finding">
+      <p class="fq">問題二</p>
+      <h3>他們的理財，規劃好了嗎？</h3>
+      <div class="lead"><span class="big">29%</span><span class="lead-t">才是「有餘裕、有在投資、方向清楚」的人</span></div>
+      <p class="analysis">換句話說，<span class="n">超過七成</span>的人自認還沒到位：21% 靠保險與儲蓄打底、19% 多半放定存、更有 <span class="n">31%</span> 說自己「才剛起步，還在找方法」。再看面對健康與意外的底氣，只有 32% 覺得「都備好了」，<span class="n">其餘近七成</span>仍有缺口。</p>
+      <p class="concl"><b>結論：</b>規劃到位的是少數，<b>多數人仍在半途</b>——需求真實存在，且尚未被滿足。這對財務服務不是紅海，是空白的市場。</p>
+      <div class="substat">
+        <div><b>29%</b>有餘裕、有在投資</div>
+        <div><b>31%</b>理財才剛起步</div>
+        <div><b>68%</b>健康意外底氣仍有缺口</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <p class="fq">問題三</p>
+      <h3>他們，還有什麼需求？</h3>
+      <div class="lead"><span class="big">50%</span><span class="lead-t">想讓現有的錢更有效率</span></div>
+      <p class="analysis">需求不但存在，還很具體——是他們自己說的。一半的人想「讓現有的錢更有效率，退休夠花還有得玩」，21% 想找到「值得信賴的方向，不再自己瞎摸索」。另一條線在健康端：<span class="n">31%</span> 明確表示「保障有了，長期照顧想再加強」。</p>
+      <p class="concl"><b>結論：</b>兩條清楚的需求線——<b>投資效率</b>與<b>長照保障</b>。他們不缺需求，缺的是把錢動起來的方法，與值得信賴的方向。</p>
+      <div class="substat">
+        <div><b>50%</b>想讓錢更有效率</div>
+        <div><b>21%</b>想找值得信賴的方向</div>
+        <div><b>31%</b>想補強長期照顧</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec-h">一句話總結</h2>
+    <div class="sec-rule"></div>
+    <div class="takeaway">
+      <p class="tk-h">THE TAKEAWAY</p>
+      <p>健康2.0 的 50＋ 用戶，正站在退休門口、理財大多還沒到位、而且自己說得出想解決什麼。他們不缺需求，缺的是把錢動起來的方法，與值得信賴的方向。</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec-h">完整問卷數據</h2>
+    <div class="sec-rule"></div>
+
+    <div class="q">
+      <p class="q-h">Q1・單選</p>
+      <p class="q-t">退休，對你來說是——</p>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">正在享受，日子是自己的了</span><span class="bar-val">515 票<b>32%</b></span></div><div class="track"><div class="fill" style="width:32%"></div></div></div>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">就在眼前，開始認真規劃（5 年內）</span><span class="bar-val">422 票<b>26%</b></span></div><div class="track"><div class="fill" style="width:26%"></div></div></div>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">還在路上，先顧好現在</span><span class="bar-val">432 票<b>27%</b></span></div><div class="track"><div class="fill" style="width:27%"></div></div></div>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">還沒細想，走著看</span><span class="bar-val">252 票<b>15%</b></span></div><div class="track"><div class="fill" style="width:15%"></div></div></div>
+    </div>
+
+    <div class="q">
+      <p class="q-h">Q2・單選</p>
+      <p class="q-t">你的退休金，準備得如何？</p>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">很有餘裕——股票、ETF、基金穩定成長，方向清楚</span><span class="bar-val">462 票<b>29%</b></span></div><div class="track"><div class="fill" style="width:29%"></div></div></div>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">相當穩健——保險加儲蓄打底，安心</span><span class="bar-val">345 票<b>21%</b></span></div><div class="track"><div class="fill" style="width:21%"></div></div></div>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">穩紮穩打——多半放定存，想讓它更會生錢</span><span class="bar-val">304 票<b>19%</b></span></div><div class="track"><div class="fill" style="width:19%"></div></div></div>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">才剛起步——想開始，還在找方法</span><span class="bar-val">510 票<b>31%</b></span></div><div class="track"><div class="fill" style="width:31%"></div></div></div>
+    </div>
+
+    <div class="q">
+      <p class="q-h">Q3・單選</p>
+      <p class="q-t">想把退休過得更好，你最想搞定哪件事？</p>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">讓現有的錢更有效率，退休夠花還有得玩</span><span class="bar-val">807 票<b>50%</b></span></div><div class="track"><div class="fill" style="width:50%"></div></div></div>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">讓躺著的定存動起來，開始為自己加薪</span><span class="bar-val">138 票<b>8%</b></span></div><div class="track"><div class="fill" style="width:8%"></div></div></div>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">加一層保障，讓意外不打亂生活節奏</span><span class="bar-val">339 票<b>21%</b></span></div><div class="track"><div class="fill" style="width:21%"></div></div></div>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">找到值得信賴的方向，不再自己瞎摸索</span><span class="bar-val">337 票<b>21%</b></span></div><div class="track"><div class="fill" style="width:21%"></div></div></div>
+    </div>
+
+    <div class="q">
+      <p class="q-h">Q4・單選</p>
+      <p class="q-t">面對健康和意外，你的底氣有多足？</p>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">保險、預備金都備好了，很踏實</span><span class="bar-val">515 票<b>32%</b></span></div><div class="track"><div class="fill" style="width:32%"></div></div></div>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">保障有了，長期照顧想再加強</span><span class="bar-val">508 票<b>31%</b></span></div><div class="track"><div class="fill" style="width:31%"></div></div></div>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">心裡有數，還沒實際安排</span><span class="bar-val">397 票<b>25%</b></span></div><div class="track"><div class="fill" style="width:25%"></div></div></div>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">還沒開始建立這份安心</span><span class="bar-val">201 票<b>12%</b></span></div><div class="track"><div class="fill" style="width:12%"></div></div></div>
+    </div>
+
+    <div class="q">
+      <p class="q-h">Q5・單選</p>
+      <p class="q-t">如果想放下工作、專心照顧自己或家人一陣子，你的財務自由度有多大？</p>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">一年以上沒問題，很自在</span><span class="bar-val">783 票<b>48%</b></span></div><div class="track"><div class="fill" style="width:48%"></div></div></div>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">半年到一年，游刃有餘</span><span class="bar-val">217 票<b>13%</b></span></div><div class="track"><div class="fill" style="width:13%"></div></div></div>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">幾個月內還行，想更寬裕些</span><span class="bar-val">272 票<b>17%</b></span></div><div class="track"><div class="fill" style="width:17%"></div></div></div>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">這部分想好好規劃一下</span><span class="bar-val">349 票<b>22%</b></span></div><div class="track"><div class="fill" style="width:22%"></div></div></div>
+    </div>
+
+    <div class="q">
+      <p class="q-h">Q6・單選</p>
+      <p class="q-t">如果讓你給年輕人一句真心話——你覺得退休前，至少要存到多少才安心？</p>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">1,000 萬以內，夠用就好</span><span class="bar-val">242 票<b>15%</b></span></div><div class="track"><div class="fill" style="width:15%"></div></div></div>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">1,000–2,000 萬，才有餘裕</span><span class="bar-val">374 票<b>23%</b></span></div><div class="track"><div class="fill" style="width:23%"></div></div></div>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">2,000–5,000 萬，想過得好一點</span><span class="bar-val">291 票<b>18%</b></span></div><div class="track"><div class="fill" style="width:18%"></div></div></div>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">5,000 萬以上，才叫真自由</span><span class="bar-val">180 票<b>11%</b></span></div><div class="track"><div class="fill" style="width:11%"></div></div></div>
+      <div class="bar-row"><div class="bar-top"><span class="bar-label">錢是其次，健康和心態更重要</span><span class="bar-val">534 票<b>33%</b></span></div><div class="track"><div class="fill" style="width:33%"></div></div></div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p class="src">資料來源：健康2.0 站內問卷「55 歲後的第二人生，你想怎麼過？」<br>回收 1,621 份（目標 1,000 份）・全六題單選・作答期間 2026.08.25–09.05。百分比四捨五入，各題合計可能非 100%。</p>
+    <p class="brand">TVBS｜聯利媒體</p>
+  </footer>
+
+</div>
+</body>
+</html>

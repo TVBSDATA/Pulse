@@ -1,0 +1,220 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>台股問卷 Insight</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;700&display=swap">
+<style>
+:root{
+  --color-bg:#FFFFFF; --color-panel:#F5F6F8; --color-fg:#1B1F27; --color-fg-secondary:#3B4252; --color-fg-muted:#5F6776;
+  --color-border-line:#DFE3EA; --color-ok:#1E8E5A; --color-warn:#B7791F; --color-bad:#C93B3B;
+  --cds-rem-scale:1; --cds-radius:.5rem;
+  --cds-pad-xs:.375rem; --cds-pad-sm:.5rem; --cds-pad-md:.75rem; --cds-pad-lg:1rem; --cds-pad-xl:1.5rem;
+  --cds-gap-xs:.5rem; --cds-gap-sm:.75rem; --cds-gap-md:1rem; --cds-gap-lg:1.75rem; --cds-gap-xl:2.5rem;
+  --cds-font-size-caption:.75rem; --cds-font-size-body:.875rem; --cds-font-size-heading:.9375rem; --cds-font-size-title:1.375rem;
+  --cds-font-weight-medium:500; --cds-dur-slow:.45s;
+  --cds-border:rgba(27,31,39,.12); --cds-chart-grid:rgba(27,31,39,.10); --cds-chart-muted:#C3C2B7; --cds-chart-reference:#8A8F9B;
+  --cds-surface-popover:#FFFFFF; --cds-shadow-popover:0 8px 24px #0000001f,0 2px 6px #00000014;
+  --cds-chart-categorical-1:#2a78d6; --cds-chart-categorical-2:#eb6834; --cds-chart-categorical-3:#1baf7a; --cds-chart-categorical-4:#eda100;
+  --cds-chart-categorical-5:#e87ba4; --cds-chart-categorical-6:#008300; --cds-chart-categorical-7:#6250d6; --cds-chart-categorical-8:#e34948;
+  --font-anthropic-sans:"Noto Sans TC",ui-sans-serif,system-ui,-apple-system,"PingFang TC","Microsoft JhengHei","Segoe UI",sans-serif;
+  --font-anthropic-serif:"Noto Serif TC",ui-serif,"Songti TC",Georgia,serif;
+}
+@media (prefers-color-scheme:dark){:root{
+  --color-bg:#111318; --color-panel:#1A1D24; --color-fg:#ECEEF2; --color-fg-secondary:#C9CED8; --color-fg-muted:#9AA1AF;
+  --color-border-line:#2A2F3A; --color-ok:#4CC794; --color-warn:#E3B04B; --color-bad:#F07A7A;
+  --cds-border:rgba(236,238,242,.14); --cds-chart-grid:rgba(236,238,242,.12); --cds-chart-muted:#5f5e5a; --cds-chart-reference:#9AA1AF;
+  --cds-surface-popover:#232832; --cds-shadow-popover:0 8px 24px #00000052,0 2px 6px #0003;
+  --cds-chart-categorical-1:#3987e5; --cds-chart-categorical-2:#d95926; --cds-chart-categorical-3:#199e70; --cds-chart-categorical-4:#c98500;
+  --cds-chart-categorical-5:#d55181; --cds-chart-categorical-6:#008300; --cds-chart-categorical-7:#9085e9; --cds-chart-categorical-8:#e66767;
+  color-scheme:dark}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--color-bg);color:var(--color-fg);font-family:var(--font-anthropic-sans);line-height:1.6;
+  padding-block:32px 72px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+svg text{fill:currentColor}
+#dash-root,#dash-root .pg,#dash-root .sec,#dash-root .stack,#dash-root .card,#dash-root .wrap{min-width:0;max-width:100%}
+#dash-root .wrap{overflow-x:auto}
+</style>
+<style>
+.tw-page{max-width:1100px;margin-inline:auto;font-family:var(--font-anthropic-sans);color:var(--color-fg);display:flex;flex-direction:column;gap:var(--cds-gap-lg)}
+.tw-eyebrow{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);letter-spacing:.04em}
+.tw-page h1{font-family:var(--font-anthropic-serif);font-weight:400;font-size:2rem;line-height:1.25;margin:.25rem 0 .5rem}
+.tw-take{font-size:var(--cds-font-size-heading);line-height:1.6;margin:0;max-width:46rem}
+.tw-page b{font-weight:600;font-variant-numeric:tabular-nums}
+.tw-nav{display:flex;flex-wrap:wrap;gap:var(--cds-gap-sm);margin-top:var(--cds-gap-md)}
+.tw-nav a{border:1px solid var(--color-border-line);border-radius:999px;padding:.3rem .8rem;font-size:var(--cds-font-size-caption);color:var(--color-fg);text-decoration:none;cursor:pointer}
+.tw-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,11rem),1fr));gap:var(--cds-gap-md)}
+.tw-tile,.tw-card{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-lg);position:relative}
+.tw-tile .l{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.tw-tile .v{font-family:var(--font-anthropic-serif);font-size:2.25rem;font-weight:400;line-height:1.2;font-variant-numeric:tabular-nums;margin:.25rem 0}
+.tw-tile .s{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.tw-chap{display:flex;flex-direction:column;gap:var(--cds-gap-md);padding-top:var(--cds-gap-lg);border-top:1px solid var(--color-border-line)}
+.tw-badge{display:inline-block;border:1px solid var(--color-border-line);border-radius:999px;padding:.1rem .6rem;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin-bottom:.4rem}
+.tw-chap h2.tw-h{font-family:var(--font-anthropic-serif);font-weight:400;font-size:1.5rem;line-height:1.3;margin:0}
+.tw-sub{margin:.25rem 0 0;font-size:var(--cds-font-size-body);line-height:1.6;color:var(--color-fg-muted);max-width:46rem}
+.tw-card h3{font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0 0 .25rem}
+.tw-card .note{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:0 0 var(--cds-gap-md);line-height:1.6}
+.tw-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:var(--cds-gap-md)}
+.tw-grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:var(--cds-gap-md)}
+.tw-scroll{overflow-x:auto}
+.tw-page table{border-collapse:separate;border-spacing:2px;width:100%;font-variant-numeric:tabular-nums;font-size:var(--cds-font-size-caption)}
+.tw-page th{font-weight:var(--cds-font-weight-medium);color:var(--color-fg-muted);text-align:center;padding:.35rem .4rem;white-space:nowrap}
+.tw-page th:first-child,.tw-page td:first-child{text-align:left}
+.tw-page td{text-align:center;padding:.5rem .4rem;border-radius:4px}
+.tw-page td:first-child,.tw-page td:nth-child(2){background:none !important;color:var(--color-fg)}
+.tw-page td:nth-child(2){color:var(--color-fg-muted)}
+.tw-chart{min-height:96px;width:100%}
+.tw-chart svg{display:block}
+.tw-chart text{fill:var(--color-fg-muted);font-size:12px;font-family:var(--font-anthropic-sans)}
+.tw-chart text.strong{fill:var(--color-fg)}
+.tw-tip{position:absolute;pointer-events:none;display:none;background:var(--cds-surface-popover);border:1px solid var(--cds-border);border-radius:var(--cds-radius);box-shadow:var(--cds-shadow-popover);padding:var(--cds-pad-xs) var(--cds-pad-sm);font-size:var(--cds-font-size-caption);z-index:5;white-space:nowrap}
+.tw-q h3,.tw-idea h3{font-size:var(--cds-font-size-body);font-weight:var(--cds-font-weight-medium);margin:0 0 .5rem;line-height:1.4}
+.tw-q p,.tw-idea p{margin:0 0 .6rem;font-size:var(--cds-font-size-body);line-height:1.65}
+.tw-idea .k{display:block;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin-bottom:.1rem}
+.tw-idea .no{font-family:var(--font-anthropic-serif);color:var(--color-fg-muted);margin-right:.4rem}
+.tw-foot{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);line-height:1.7}
+.tw-fail{display:flex;align-items:center;justify-content:center;gap:.4rem;min-height:96px;color:var(--color-fg-muted);font-size:var(--cds-font-size-caption)}
+.tw-fail i{width:.375rem;height:.375rem;border-radius:50%;background:var(--color-bad);display:inline-block}
+[data-dash-source-state=empty]{color:transparent}
+[data-dash-source-state=refreshing]{opacity:.5;transition:opacity var(--cds-dur-slow)}
+.tw-basic dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:var(--cds-gap-md);margin:0}
+.tw-basic dt{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin-bottom:.15rem}
+.tw-basic dd{margin:0;font-size:var(--cds-font-size-body);line-height:1.5}
+</style>
+</head><body>
+<div id="dash-root">
+<div class="tw-page">
+<header>
+  <div class="tw-eyebrow">TVBS 財經讀者問卷 · 讀者輪廓</div>
+  <h1>財經讀者早就在場內，卻多半覺得沒跟上</h1>
+  <p class="tw-take"><b data-fmt="p">90%</b> 的受訪讀者手上有部位，但只有 <b data-fmt="p">33%</b> 覺得這波賺到。他們缺的不是資訊，是「我現在該怎麼辦」的答案。樣本共 <b data-fmt="n">1,577</b> 份。</p>
+  <div class="tw-nav"><a data-go="who">01 他們是誰</a><a data-go="think">02 他們在想什麼</a><a data-go="next">03 可以做什麼</a></div>
+</header>
+
+<section class="tw-card tw-basic">
+  <h3>問卷基本資料</h3>
+  <dl>
+    <div><dt>問卷</dt><dd>台股不斷創新高，大家真的都賺到了嗎？</dd></div>
+    <div><dt>放置位置</dt><dd>TVBS 新聞網站，財經新聞文章內嵌</dd></div>
+    <div><dt>站台規模</dt><dd>TVBS 財經新聞 9 月 UU 134 萬；日 DAU 約 5–15 萬，假日低、股市行情好時高（TVBS 站台流量，非問卷資料）</dd></div>
+    <div><dt>收集期間</dt><dd>10/13 00:00 起，最後一筆回覆 10/15 18:41</dd></div>
+    <div><dt>題目</dt><dd>5 題投資題＋性別、出生年，約 30 秒，答完可看所有人的答案</dd></div>
+    <div><dt>回收</dt><dd><b data-fmt="n">1,577</b> 份，其中 <b data-fmt="n">1,362</b> 份有填出生年</dd></div>
+    <div><dt>防重複</dt><dd>以瀏覽器 cookie 鎖定，作答過的人看不到問卷</dd></div>
+  </dl>
+</section>
+
+<section class="tw-tiles">
+  <div class="tw-tile"><div class="l">有在投資</div><div class="v" data-fmt="p">90%</div><div class="s">目前部位不在存款</div></div>
+  <div class="tw-tile"><div class="l">自己挑股</div><div class="v" data-fmt="p">49%</div><div class="s">部位主要在個股</div></div>
+  <div class="tw-tile"><div class="l">賺到</div><div class="v" data-fmt="p">33%</div><div class="s">賺不少＋有跟上</div></div>
+  <div class="tw-tile"><div class="l">落後或套牢</div><div class="v" data-fmt="p">56%</div><div class="s">沒跟上大盤，或還在等它回來</div></div>
+</section>
+
+<section class="tw-chap" id="who">
+  <div><span class="tw-badge">01 他們是誰</span>
+  <h2 class="tw-h">已經下場，而且還想要更多</h2>
+  <p class="tw-sub"><b data-fmt="p">90%</b> 有部位、<b data-fmt="p">49%</b> 自己挑股、<b data-fmt="p">56%</b> 沒跟上大盤。投資工具、資產管理與投資教育都有缺口可以賣。</p></div>
+
+  <div class="tw-grid">
+    <section class="tw-card"><h3>錢放在哪</h3><p class="note">目前投資部位大多在哪，占全體比例。</p><div class="tw-chart" id="tw-mix"><svg width="100%" viewBox="0 0 508 170"><text x="76" y="21" text-anchor="end" class="strong">個股</text><rect x="84" y="6" width="330.43478260869574" height="22" rx="4" style="fill: var(--cds-chart-categorical-1);"></rect><text x="420.43478260869574" y="21">49%</text><text x="76" y="53" text-anchor="end" class="">市值型 ETF</text><rect x="84" y="38" width="123.91304347826087" height="22" rx="4" style="fill: var(--cds-chart-muted);"></rect><text x="213.91304347826087" y="53">18%</text><text x="76" y="85" text-anchor="end" class="">高股息 ETF</text><rect x="84" y="70" width="100.06723442402512" height="22" rx="4" style="fill: var(--cds-chart-muted);"></rect><text x="190.06723442402512" y="85">15%</text><text x="76" y="117" text-anchor="end" class="">基金／主動式</text><rect x="84" y="102" width="50.24652622142537" height="22" rx="4" style="fill: var(--cds-chart-muted);"></rect><text x="140.24652622142537" y="117">7%</text><text x="76" y="149" text-anchor="end" class="">存款觀望</text><rect x="84" y="134" width="66.8534289556253" height="22" rx="4" style="fill: var(--cds-chart-muted);"></rect><text x="156.8534289556253" y="149">10%</text></svg></div><div class="tw-tip"></div></section>
+    <section class="tw-card"><h3>資金層級</h3><p class="note">若朋友想開始投資，會建議他第一步怎麼做（可視為對資金門檻的看法）。</p><div class="tw-chart" id="tw-q3"><svg width="100%" viewBox="0 0 508 138"><text x="76" y="21" text-anchor="end" class="">每月定期定額</text><rect x="84" y="6" width="330.4347826086957" height="22" rx="4" style="fill: var(--cds-chart-muted);"></rect><text x="420.4347826086957" y="21">39%</text><text x="76" y="53" text-anchor="end" class="">10 萬左右</text><rect x="84" y="38" width="190.59391872691106" height="22" rx="4" style="fill: var(--cds-chart-muted);"></rect><text x="280.59391872691106" y="53">22%</text><text x="76" y="85" text-anchor="end" class="">至少 50 萬</text><rect x="84" y="70" width="126.88263711281613" height="22" rx="4" style="fill: var(--cds-chart-muted);"></rect><text x="216.88263711281613" y="85">15%</text><text x="76" y="117" text-anchor="end" class="strong">100 萬以上</text><rect x="84" y="102" width="189.5140664961637" height="22" rx="4" style="fill: var(--cds-chart-categorical-1);"></rect><text x="279.5140664961637" y="117">22%</text></svg></div><div class="tw-tip"></div></section>
+  </div>
+
+  <section class="tw-card" id="tw-card-seg">
+    <h3>四種處境，賺到的只是其中一種</h3>
+    <p class="note">依第 1 題自評分組，占全體回覆的比例。</p>
+    <div class="tw-chart" id="tw-seg"><svg width="100%" viewBox="0 0 1066 88"><rect x="0" y="6" width="350.17882054533925" height="40" rx="4" style="fill: var(--cds-chart-categorical-1);"></rect><text class="strong" x="2" y="64">賺到</text><text x="2" y="80">33%</text><rect x="352.17882054533925" y="6" width="360.99429296131893" height="40" rx="4" style="fill: var(--cds-chart-categorical-2);"></rect><text class="strong" x="354.17882054533925" y="64">落後</text><text x="354.17882054533925" y="80">34%</text><rect x="715.1731135066582" y="6" width="229.18072289156626" height="40" rx="4" style="fill: var(--cds-chart-categorical-3);"></rect><text class="strong" x="717.1731135066582" y="64">套牢</text><text x="717.1731135066582" y="80">22%</text><rect x="946.3538363982244" y="6" width="117.64616360177553" height="40" rx="4" style="fill: var(--cds-chart-categorical-4);"></rect><text class="strong" x="948.3538363982244" y="64">場邊</text><text x="948.3538363982244" y="80">11%</text></svg></div>
+  <div class="tw-tip"></div></section>
+
+  <section class="tw-card">
+    <h3>各處境的錢放在哪</h3>
+    <p class="note">處境 × 目前部位。每列加總為 100%，顏色越深占比越高。</p>
+    <div class="tw-scroll"><table id="tw-t2">
+      <thead><tr><th>處境</th><th>人數</th><th>個股</th><th>市值型 ETF</th><th>高股息 ETF</th><th>基金／主動式</th><th>存款觀望</th></tr></thead><tbody><tr><td>賺到</td><td>521</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 66%, transparent);">51%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 33%, transparent);">25%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 21%, transparent);">16%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 9%, transparent);">7%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 1%, transparent);">1%</td></tr><tr><td>落後</td><td>537</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 63%, transparent);">48%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 25%, transparent);">20%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 27%, transparent);">21%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 11%, transparent);">9%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 3%, transparent);">2%</td></tr><tr><td>套牢</td><td>342</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 85%, transparent);">66%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 16%, transparent);">12%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 9%, transparent);">7%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 11%, transparent);">8%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 8%, transparent);">6%</td></tr><tr><td>場邊</td><td>177</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 18%, transparent);">14%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 10%, transparent);">8%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 10%, transparent);">8%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 6%, transparent);">5%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 85%, transparent);">66%</td></tr></tbody></table></div>
+  </section>
+
+  <div class="tw-grid3">
+    <div class="tw-card tw-q"><h3>① 落後＋套牢：賣「為什麼我沒跟上」</h3><p>占 <b data-fmt="p">56%</b>，其中 <b data-fmt="p">55%</b> 重倉個股。對應投信的市值型 ETF、券商的持股工具、投資教育。</p></div>
+    <div class="tw-card tw-q"><h3>② 賺到：高資產與財管</h3><p>占 <b data-fmt="p">33%</b>，其中 <b data-fmt="p">30%</b> 認為要做就 100 萬以上，是各處境最高。對應財管、主動式基金、高資產講座。</p></div>
+    <div class="tw-card tw-q"><h3>③ 場邊：入門與開戶</h3><p>占 <b data-fmt="p">11%</b>，其中 <b data-fmt="p">49%</b> 建議新手從定期定額開始。對應數位券商開戶、定期定額方案、入門課程。</p></div>
+  </div>
+</section>
+
+<section class="tw-chap" id="think">
+  <div><span class="tw-badge">02 他們在想什麼</span>
+  <h2 class="tw-h">他們不缺資訊，缺「我該怎麼辦」</h2>
+  <p class="tw-sub">賺到的人要續抱還是收，落後的人要換還是等，場邊的人要不要進。三種處境，三種問題。</p></div>
+
+  <div class="tw-grid3">
+    <div class="tw-card tw-q"><h3>「我該先收獲利嗎？」</h3><p>落後者最想先落袋，比例 <b data-fmt="p">31%</b>，高過賺到的人。獲利了結的做法與時機值得專題。</p></div>
+    <div class="tw-card tw-q"><h3>「為什麼我沒跟上大盤？」</h3><p>個股派賺到的比例 <b data-fmt="p">34%</b>，市值型 ETF 是 <b data-fmt="p">45%</b>。「選股 vs 大盤」的績效檢視是讀者的痛點。</p></div>
+    <div class="tw-card tw-q"><h3>「現在進場晚了嗎？」</h3><p>場邊者有 <b data-fmt="p">37%</b> 預測年底會回到 45,000 以下。入門、分批與時機的內容要正面回答這份不安。</p></div>
+  </div>
+
+  <section class="tw-card">
+    <h3>賺到的繼續買，落後的最想先收獲利</h3>
+    <p class="note">處境 × 下一步。每列加總為 100%。</p>
+    <div class="tw-scroll"><table id="tw-t4">
+      <thead><tr><th>處境</th><th>人數</th><th>繼續買</th><th>抱著不動</th><th>先收獲利</th><th>先觀望</th><th>找進場點</th><th>等大跌</th></tr></thead><tbody><tr><td>賺到</td><td>521</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 77%, transparent);">60%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 20%, transparent);">15%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 24%, transparent);">19%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 6%, transparent);">5%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 1%, transparent);">1%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 1%, transparent);">1%</td></tr><tr><td>落後</td><td>537</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 45%, transparent);">34%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 25%, transparent);">19%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 40%, transparent);">31%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 15%, transparent);">11%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 4%, transparent);">3%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 2%, transparent);">1%</td></tr><tr><td>套牢</td><td>342</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 34%, transparent);">26%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 40%, transparent);">31%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 25%, transparent);">20%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 20%, transparent);">15%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 6%, transparent);">4%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 5%, transparent);">4%</td></tr><tr><td>場邊</td><td>177</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 20%, transparent);">15%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 12%, transparent);">9%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 12%, transparent);">10%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 37%, transparent);">29%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 30%, transparent);">23%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 18%, transparent);">14%</td></tr></tbody></table></div>
+  </section>
+
+  <section class="tw-card">
+    <h3>場邊的人最看空，賺到的人最集中在中間價位</h3>
+    <p class="note">處境 × 年底預測。每列以該處境全部回覆為分母，「其他」未列出。</p>
+    <div class="tw-scroll"><table id="tw-t5">
+      <thead><tr><th>處境</th><th>人數</th><th>45,000 以下</th><th>45–50K</th><th>50–55K</th><th>55K 以上</th></tr></thead><tbody><tr><td>賺到</td><td>521</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 9%, transparent);">7%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 32%, transparent);">25%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 73%, transparent);">56%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 15%, transparent);">12%</td></tr><tr><td>落後</td><td>537</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 12%, transparent);">9%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 47%, transparent);">36%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 59%, transparent);">45%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 11%, transparent);">9%</td></tr><tr><td>套牢</td><td>342</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 21%, transparent);">16%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 41%, transparent);">31%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 51%, transparent);">39%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 17%, transparent);">13%</td></tr><tr><td>場邊</td><td>177</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 48%, transparent);">37%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 30%, transparent);">23%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 27%, transparent);">21%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 21%, transparent);">16%</td></tr></tbody></table></div>
+  </section>
+
+  <div class="tw-grid">
+    <section class="tw-card" id="tw-card-win">
+      <h3>市值型 ETF 的賺到比例，高過個股</h3>
+      <p class="note">各部位中「賺到」的比例，虛線為全體。括號為人數；基金／主動式人數少，看方向即可。</p>
+      <div class="tw-chart" id="tw-win"><svg width="100%" viewBox="0 0 508 188"><text x="118" y="39" text-anchor="end" class="strong">市值型ETF（291）</text><rect x="126" y="24" width="293.9130434782609" height="22" rx="4" style="fill: var(--cds-chart-categorical-1);"></rect><text x="425.9130434782609" y="39">45%</text><text x="118" y="71" text-anchor="end" class="">高股息ETF（235）</text><rect x="126" y="56" width="233.37373509120056" height="22" rx="4" style="fill: var(--cds-chart-muted);"></rect><text x="365.37373509120056" y="71">36%</text><text x="118" y="103" text-anchor="end" class="strong">個股（776）</text><rect x="126" y="88" width="222.95884500497846" height="22" rx="4" style="fill: var(--cds-chart-categorical-1);"></rect><text x="354.95884500497846" y="103">34%</text><text x="118" y="135" text-anchor="end" class="">基金／主動式（118）</text><rect x="126" y="120" width="193.65405277694964" height="22" rx="4" style="fill: var(--cds-chart-muted);"></rect><text x="325.65405277694964" y="135">30%</text><text x="118" y="167" text-anchor="end" class="">存款觀望（157）</text><rect x="126" y="152" width="24.95124101293544" height="22" rx="4" style="fill: var(--cds-chart-muted);"></rect><text x="156.95124101293544" y="167">4%</text><line x1="341.698230937971" x2="341.698230937971" y1="16" y2="188" stroke-dasharray="4 3" style="stroke: var(--cds-chart-reference);"></line><text x="341.698230937971" y="10" text-anchor="middle">全體 33%</text></svg></div>
+    <div class="tw-tip"></div></section>
+    <section class="tw-card">
+      <h3>年輕人較常在場邊，高齡者最常是「小賺沒跟上」</h3>
+      <p class="note">年齡 × 處境，只含有填出生年的有效回覆。</p>
+      <div class="tw-scroll"><table id="tw-t6">
+        <thead><tr><th>年齡</th><th>人數</th><th>賺到</th><th>落後</th><th>套牢</th><th>場邊</th></tr></thead><tbody><tr><td>30歲以下</td><td>119</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 36%, transparent);">28%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 44%, transparent);">34%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 22%, transparent);">17%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 28%, transparent);">22%</td></tr><tr><td>30–39</td><td>329</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 40%, transparent);">30%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 45%, transparent);">35%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 28%, transparent);">21%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 18%, transparent);">14%</td></tr><tr><td>40–49</td><td>441</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 47%, transparent);">36%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 42%, transparent);">32%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 30%, transparent);">23%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 11%, transparent);">9%</td></tr><tr><td>50–59</td><td>315</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 50%, transparent);">39%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 46%, transparent);">36%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 26%, transparent);">20%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 7%, transparent);">6%</td></tr><tr><td>60歲以上</td><td>158</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 46%, transparent);">35%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 55%, transparent);">42%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 20%, transparent);">15%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 9%, transparent);">7%</td></tr></tbody></table></div>
+    </section>
+  </div>
+
+  <section class="tw-card" id="tw-card-gen">
+    <h3>男女賺的一樣多，下注方式不同</h3>
+    <p class="note">男 <b data-fmt="n">929</b> 人、女 <b data-fmt="n">513</b> 人（不透露與非二元樣本少，未列入）。各題占該性別全部回覆的比例，依差距由大到小排列；＊ 表示差距達 95% 顯著。</p>
+    <div class="tw-chart" id="tw-gen"><svg width="100%" viewBox="0 0 1066 356"><line x1="139" x2="139" y1="20" y2="334" style="stroke: var(--cds-chart-grid);"></line><text x="139" y="350" text-anchor="middle">0%</text><line x1="438.8359251449657" x2="438.8359251449657" y1="20" y2="334" style="stroke: var(--cds-chart-grid);"></line><text x="438.8359251449657" y="350" text-anchor="middle">20%</text><line x1="738.6718502899314" x2="738.6718502899314" y1="20" y2="334" style="stroke: var(--cds-chart-grid);"></line><text x="738.6718502899314" y="350" text-anchor="middle">40%</text><circle cx="145" cy="8" r="5" style="fill: var(--cds-chart-categorical-1);"></circle><text x="155" y="12">男</text><circle cx="185" cy="8" r="5" style="fill: var(--cds-chart-categorical-2);"></circle><text x="195" y="12">女</text><text x="129" y="43" text-anchor="end" class="strong">建議 100 萬以上入場 ＊</text><line x1="323.109778597786" x2="535.9840558969945" y1="39" y2="39" stroke-width="3" stroke-linecap="round" style="stroke: var(--cds-chart-muted);"></line><circle cx="323.109778597786" cy="39" r="6" style="fill: var(--cds-chart-categorical-2);"></circle><circle cx="535.9840558969945" cy="39" r="6" style="fill: var(--cds-chart-categorical-1);"></circle><text x="545.9840558969945" y="43">26%</text><text x="313.109778597786" y="43" text-anchor="end">12%</text><rect x="0" y="22" width="1066" height="34" style="fill: transparent;"></rect><text x="129" y="77" text-anchor="end" class="strong">建議定期定額 ＊</text><line x1="668.3120745293259" x2="822.8363205060621" y1="73" y2="73" stroke-width="3" stroke-linecap="round" style="stroke: var(--cds-chart-muted);"></line><circle cx="822.8363205060621" cy="73" r="6" style="fill: var(--cds-chart-categorical-2);"></circle><circle cx="668.3120745293259" cy="73" r="6" style="fill: var(--cds-chart-categorical-1);"></circle><text x="832.8363205060621" y="77">46%</text><text x="658.3120745293259" y="77" text-anchor="end">35%</text><rect x="0" y="56" width="1066" height="34" style="fill: transparent;"></rect><text x="129" y="111" text-anchor="end" class="strong">先收獲利 ＊</text><line x1="424.6348694868619" x2="562.7447285187137" y1="107" y2="107" stroke-width="3" stroke-linecap="round" style="stroke: var(--cds-chart-muted);"></line><circle cx="562.7447285187137" cy="107" r="6" style="fill: var(--cds-chart-categorical-2);"></circle><circle cx="424.6348694868619" cy="107" r="6" style="fill: var(--cds-chart-categorical-1);"></circle><text x="572.7447285187137" y="111">28%</text><text x="414.6348694868619" y="111" text-anchor="end">19%</text><rect x="0" y="90" width="1066" height="34" style="fill: transparent;"></rect><text x="129" y="145" text-anchor="end" class="strong">預測 45,000 以下 ＊</text><line x1="282.19649446494464" x2="356.8571038459116" y1="141" y2="141" stroke-width="3" stroke-linecap="round" style="stroke: var(--cds-chart-muted);"></line><circle cx="282.19649446494464" cy="141" r="6" style="fill: var(--cds-chart-categorical-2);"></circle><circle cx="356.8571038459116" cy="141" r="6" style="fill: var(--cds-chart-categorical-1);"></circle><text x="366.8571038459116" y="145">15%</text><text x="272.19649446494464" y="145" text-anchor="end">10%</text><rect x="0" y="124" width="1066" height="34" style="fill: transparent;"></rect><text x="129" y="179" text-anchor="end" class="">重倉個股</text><line x1="860.3490771786851" x2="930.9642857142857" y1="175" y2="175" stroke-width="3" stroke-linecap="round" style="stroke: var(--cds-chart-muted);"></line><circle cx="930.9642857142857" cy="175" r="6" style="fill: var(--cds-chart-categorical-2);"></circle><circle cx="860.3490771786851" cy="175" r="6" style="fill: var(--cds-chart-categorical-1);"></circle><text x="940.9642857142857" y="179">53%</text><text x="850.3490771786851" y="179" text-anchor="end">48%</text><rect x="0" y="158" width="1066" height="34" style="fill: transparent;"></rect><text x="129" y="213" text-anchor="end" class="strong">預測 55,000 以上 ＊</text><line x1="252.97272008434368" x2="311.67192675194474" y1="209" y2="209" stroke-width="3" stroke-linecap="round" style="stroke: var(--cds-chart-muted);"></line><circle cx="252.97272008434368" cy="209" r="6" style="fill: var(--cds-chart-categorical-2);"></circle><circle cx="311.67192675194474" cy="209" r="6" style="fill: var(--cds-chart-categorical-1);"></circle><text x="321.67192675194474" y="213">12%</text><text x="242.97272008434368" y="213" text-anchor="end">8%</text><rect x="0" y="192" width="1066" height="34" style="fill: transparent;"></rect><text x="129" y="247" text-anchor="end" class="strong">場邊 ＊</text><line x1="241.2832103321033" x2="297.148119828884" y1="243" y2="243" stroke-width="3" stroke-linecap="round" style="stroke: var(--cds-chart-muted);"></line><circle cx="241.2832103321033" cy="243" r="6" style="fill: var(--cds-chart-categorical-2);"></circle><circle cx="297.148119828884" cy="243" r="6" style="fill: var(--cds-chart-categorical-1);"></circle><text x="307.148119828884" y="247">11%</text><text x="231.2832103321033" y="247" text-anchor="end">7%</text><rect x="0" y="226" width="1066" height="34" style="fill: transparent;"></rect><text x="129" y="281" text-anchor="end" class="">繼續買</text><line x1="723.4754876120188" x2="742.5448654694143" y1="277" y2="277" stroke-width="3" stroke-linecap="round" style="stroke: var(--cds-chart-muted);"></line><circle cx="723.4754876120188" cy="277" r="6" style="fill: var(--cds-chart-categorical-2);"></circle><circle cx="742.5448654694143" cy="277" r="6" style="fill: var(--cds-chart-categorical-1);"></circle><text x="752.5448654694143" y="281">40%</text><rect x="0" y="260" width="1066" height="34" style="fill: transparent;"></rect><text x="129" y="315" text-anchor="end" class="">賺到</text><line x1="653.7882676062651" x2="656.2608065366368" y1="311" y2="311" stroke-width="3" stroke-linecap="round" style="stroke: var(--cds-chart-muted);"></line><circle cx="656.2608065366368" cy="311" r="6" style="fill: var(--cds-chart-categorical-2);"></circle><circle cx="653.7882676062651" cy="311" r="6" style="fill: var(--cds-chart-categorical-1);"></circle><text x="666.2608065366368" y="315">35%</text><rect x="0" y="294" width="1066" height="34" style="fill: transparent;"></rect></svg></div>
+    <p class="note" style="margin:var(--cds-gap-md) 0 0">賺到的比例幾乎一樣。差別在金額與節奏：男性建議的入場金額高得多，女性更愛先落袋、偏定期定額；男性的年底預測也更兩極。女性樣本年齡偏高，男性有更多 30 歲以下。</p>
+  <div class="tw-tip"></div></section>
+</section>
+
+<section class="tw-chap" id="next">
+  <div><span class="tw-badge">03 可以做什麼</span>
+  <h2 class="tw-h">四個可以先做小的服務</h2>
+  <p class="tw-sub">每個點子都從問卷裡的訊號出發，先做最小可驗證的版本，再看讀者買不買單。</p></div>
+
+  <div class="tw-grid3">
+    <div class="tw-card tw-idea"><h3><span class="no">1</span>持股健檢：我跟上大盤了嗎？</h3>
+      <p><span class="k">訊號</span>落後＋套牢占 <b data-fmt="p">56%</b>；個股派賺到 <b data-fmt="p">34%</b>，市值型 ETF <b data-fmt="p">45%</b>。</p>
+      <p><span class="k">服務</span>讀者貼上持股，與大盤和市值型 ETF 同期對照，一句話說明差在哪，產出可分享的結果卡。</p>
+      <p><span class="k">第一版</span>手動輸入五檔股票，年初至今對照。</p></div>
+    <div class="tw-card tw-idea"><h3><span class="no">2</span>獲利了結情境器：該收了嗎？</h3>
+      <p><span class="k">訊號</span>落後者想先收獲利的比例 <b data-fmt="p">31%</b>，全體為 <b data-fmt="p">22%</b>。</p>
+      <p><span class="k">服務</span>輸入成本與部位，給「收一半、續抱、分批」三種情境與歷史回檔對照，串回相關新聞。</p>
+      <p><span class="k">第一版</span>靜態情境試算加新聞推薦。</p></div>
+    <div class="tw-card tw-idea"><h3><span class="no">3</span>定期定額起步包</h3>
+      <p><span class="k">訊號</span><b data-fmt="p">39%</b> 建議新手從定期定額開始，30 歲以下是 <b data-fmt="p">59%</b>。</p>
+      <p><span class="k">服務</span>每月金額試算、扣款日提醒，和「第一次買 ETF」串成七天任務。</p>
+      <p><span class="k">第一版</span>EDM 七天課加試算器，看完課率。</p></div>
+    <div class="tw-card tw-idea"><h3><span class="no">4</span>財經讀者信心指數</h3>
+      <p><span class="k">訊號</span>五題、30 秒、答完看大家，場邊者有 <b data-fmt="p">37%</b> 看空。情緒本身就是內容。</p>
+      <p><span class="k">服務</span>固定題組每月重測，做成可追蹤的「TVBS 財經讀者信心指數」，內容、業務、提案共用。</p>
+      <p><span class="k">第一版</span>同一份問卷每月一次，保留歷史做趨勢頁。</p></div>
+  </div>
+</section>
+
+<p class="tw-foot">樣本是自願填答的財經內容讀者，投資比例可能高於一般大眾，不代表全體觀眾。處境依第 1 題自評分組：賺到＝賺不少＋有跟上；落後＝小賺但沒跟上；套牢＝還在等它回來；場邊＝今年在場邊看；「有在投資」指目前部位不在存款。年齡由出生年推算（系統補 1/1），異常值已排除，沒填出生年的不入年齡分析。</p>
+</div>
+
+</div>
+<script>document.querySelectorAll('[data-go]').forEach(function(b){b.addEventListener('click',function(){var t=document.getElementById(b.dataset.go);if(t)t.scrollIntoView({behavior:'smooth'})})})</script>
+</body></html>

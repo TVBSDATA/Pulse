@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>問卷牆</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap">
+<style>
+/* Layout: 時間軸一條、卡片一張一份問卷；IP 用色點區分，不用色條 */
+:root{
+  --bg:#F1F3F7; --panel:#FFFFFF; --ink:#12161F; --mute:#586275; --line:#DCE0E8; --soft:#E8EBF1;
+  --c-health:#1E8E6E; --c-fin:#2A5BD7; --c-ent:#C23B7A; --c-news:#B7791F;
+  --c-x1:#6B4FB8; --c-x2:#0E7C9B; --c-x3:#A5472B; --c-x4:#5E7A1E;
+  --sans:"Noto Sans TC",system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  --serif:"Noto Serif TC","Songti TC",Georgia,serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0D1017; --panel:#161B25; --ink:#E9EDF4; --mute:#9AA4B6; --line:#272E3C; --soft:#1E2431;
+  --c-health:#3FC79F; --c-fin:#7C9CFF; --c-ent:#F07AB0; --c-news:#E3B04B;
+  --c-x1:#A892F0; --c-x2:#4CC3E3; --c-x3:#F08F6E; --c-x4:#A8CC55; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0D1017; --panel:#161B25; --ink:#E9EDF4; --mute:#9AA4B6; --line:#272E3C; --soft:#1E2431;
+  --c-health:#3FC79F; --c-fin:#7C9CFF; --c-ent:#F07AB0; --c-news:#E3B04B;
+  --c-x1:#A892F0; --c-x2:#4CC3E3; --c-x3:#F08F6E; --c-x4:#A8CC55; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65;
+  padding-block:32px 72px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.w{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(30px,6vw,46px);line-height:1.15;margin:0;letter-spacing:-.01em}
+h2{font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--mute);margin:0 0 12px}
+.sub{color:var(--mute);margin:6px 0 0;font-size:14px}
+.stats{display:flex;flex-wrap:wrap;gap:12px 40px;margin-top:20px}
+.stat{min-width:0}
+.stat b{display:block;font-family:var(--serif);font-weight:900;font-size:34px;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat span{font-size:12.5px;color:var(--mute)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px;min-width:0}
+
+/* timeline */
+.tl{display:grid;grid-template-columns:minmax(78px,92px) 1fr;gap:8px 12px;align-items:center}
+.tl-axis{position:relative;height:18px;margin-inline:8px}
+.tl-axis span{position:absolute;top:0;font-size:11px;color:var(--mute);transform:translateX(-50%);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tl-lab{font-size:13px;line-height:1.3;min-width:0}
+.tl-lab small{display:block;color:var(--mute);font-size:11.5px;font-variant-numeric:tabular-nums}
+.tl-track{position:relative;height:22px;margin-inline:8px;background:
+  repeating-linear-gradient(to right,var(--soft) 0,var(--soft) 1px,transparent 1px,transparent var(--wk,12%));border-radius:3px}
+.tl-bar{position:absolute;top:3px;bottom:3px;border-radius:3px;min-width:6px}
+.dim{opacity:.28}
+
+/* controls */
+.bar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:13.5px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:3px 14px;cursor:pointer;display:inline-flex;gap:7px;align-items:center}
+.chip:hover{border-color:var(--mute)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.chip em{font-style:normal;color:var(--mute);font-variant-numeric:tabular-nums}
+.chip[aria-pressed="true"] em{color:inherit;opacity:.7}
+select{font:inherit;font-size:13.5px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:4px 10px}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:14px}
+.card{display:flex;flex-direction:column;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px;min-width:0}
+.where{display:flex;gap:8px;align-items:baseline;font-size:12.5px;color:var(--mute);min-width:0}
+.where i{width:9px;height:9px;border-radius:50%;flex:none;transform:translateY(0)}
+.where b{color:var(--ink);font-weight:700;flex:none}
+.where span{min-width:0;overflow-wrap:anywhere}
+.card h3{margin:0;font-family:var(--serif);font-weight:900;font-size:21px;line-height:1.3;text-wrap:balance}
+.q{margin:0;color:var(--mute);font-size:13px;line-height:1.55}
+.nums{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:10px}
+.nums .n{font-family:var(--serif);font-weight:900;font-size:32px;line-height:1;font-variant-numeric:tabular-nums}
+.nums .n small{font-family:var(--sans);font-weight:400;font-size:12.5px;color:var(--mute);margin-left:4px}
+.nums .p{font-size:12.5px;color:var(--mute);font-variant-numeric:tabular-nums}
+.ta{margin:0;font-size:14.5px;line-height:1.65}
+.act{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:4px}
+.btn{font:inherit;font-size:13.5px;font-weight:500;text-decoration:none;color:var(--bg);background:var(--ink);border-radius:6px;padding:5px 14px;display:inline-block}
+.btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn:hover{opacity:.85}
+.empty{padding:36px 18px;text-align:center;color:var(--mute)}
+.empty b{display:block;color:var(--ink);font-size:16px;margin-bottom:4px}
+footer{font-size:12.5px;color:var(--mute);border-top:1px solid var(--line);padding-top:14px;max-width:70ch}
+.ref h2{margin-bottom:6px}
+.ref .lead{margin:0 0 12px;color:var(--mute);font-size:14px}
+.tw{overflow-x:auto}
+.ref table{border-collapse:collapse;width:100%;min-width:460px;font-size:14px}
+.ref th{font-size:12px;letter-spacing:.06em;color:var(--mute);font-weight:700;text-align:left;padding:6px 10px;border-bottom:1px solid var(--line)}
+.ref td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.ref td:nth-child(1),.ref td:nth-child(2){font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:500}
+.ref td:nth-child(2){font-family:var(--serif);font-weight:900}
+.ref ul{margin:14px 0 0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.ref .note{margin:12px 0 0;font-size:12.5px;color:var(--mute)}
+@media (max-width:520px){.tl{grid-template-columns:70px 1fr}.stat b{font-size:28px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="w">
+<header>
+  <h1>問卷牆</h1>
+  <p class="sub">TVBS 站內問卷 Insight 報告。一份問卷一張卡，內部使用。</p>
+  <div class="stats">
+    <div class="stat"><b id="s-n">—</b><span>份問卷</span></div>
+    <div class="stat"><b id="s-t">—</b><span>累計回覆（非人數）</span></div>
+    <div class="stat"><b id="s-r">—</b><span>涵蓋期間</span></div>
+  </div>
+</header>
+
+<section class="panel" aria-labelledby="h-tl">
+  <h2 id="h-tl">上線時間軸</h2>
+  <div class="tl" id="tl"><div class="empty" style="grid-column:1/-1">載入問卷中…</div></div>
+</section>
+
+<section>
+  <div class="bar">
+    <div class="chips" id="chips" role="group" aria-label="依 IP 篩選"></div>
+    <label class="sub" style="margin:0">排序
+      <select id="sort"><option value="start">上線日，新到舊</option><option value="total">回覆數，多到少</option></select>
+    </label>
+  </div>
+  <div class="grid" id="grid" style="margin-top:14px"></div>
+</section>
+
+<section class="panel ref" aria-labelledby="h-n">
+  <h2 id="h-n">問卷樣本數與結果解讀</h2>
+  <p class="lead">所需的有效問卷數，取決於調查目的、分析對象與精準度要求。以下為隨機抽樣、95% 信心水準下，不同樣本數對應的最大抽樣誤差，供規劃時參考。</p>
+  <div class="tw"><table>
+    <thead><tr><th>有效問卷數</th><th>最大抽樣誤差</th><th>適用情境</th></tr></thead>
+    <tbody>
+      <tr><td>約 100 份</td><td>±10 個百分點</td><td>初步探索需求、蒐集方向</td></tr>
+      <tr><td>約 200 份</td><td>±7 個百分點</td><td>需求評估、產品概念調查</td></tr>
+      <tr><td>約 385 份</td><td>±5 個百分點</td><td>估計整體意見與需求比例</td></tr>
+      <tr><td>約 601 份</td><td>±4 個百分點</td><td>需要較高精準度的比例估計</td></tr>
+      <tr><td>約 1,068 份</td><td>±3 個百分點</td><td>民意調查或較高精準度的調查</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li><b>樣本數並非唯一判準。</b>若需比較不同年齡、性別或其他族群，應分別評估各組的有效樣本數，不能僅以總回收份數判斷。</li>
+    <li><b>調查結果的適用範圍取決於抽樣方式。</b>透過網站、社群或公開連結自由填答的問卷，結果主要反映參與填答者的意見，不宜直接推論至全體人口，也不宜直接套用表中的抽樣誤差。</li>
+    <li><b>這面牆上的問卷。</b>回收數在 828 到 3,017 份之間，都是網站自由填答，只當讀者輪廓看，不套用這張表的誤差。</li>
+  </ul>
+  <p class="note">註：表中數值以母體規模較大、簡單隨機抽樣、比例為 50% 估算；有效問卷指符合調查資格且通過填答品質檢核的問卷。</p>
+</section>
+
+<footer>回覆數以瀏覽器 cookie 防重複，只在單份問卷內有效，同一個人可能填過多份，所以累計不等於人數。各份問卷題目不同，這裡只放索引，不做跨問卷比較。期間為上線日到最後一筆回覆。</footer>
+</div>
+
+<script>window.__SURVEYS=[
+ {
+  "end": "2026-09-16",
+  "ip": "健康2.0",
+  "name": "骨力問卷",
+  "placement": "健康2.0 全站",
+  "question": "天天骨力問題募集",
+  "start": "2026-09-02",
+  "tagline": "熟齡為主，年齡中位數 59 歲；多數人還沒影響日常，只有少數有一套固定顧法。",
+  "total": 828,
+  "url": "reports/bone.html",
+  "links": []
+ },
+ {
+  "end": "2026-10-22",
+  "ip": "健康2.0",
+  "name": "牙科問卷",
+  "placement": "健康2.0 網站，全文章內嵌",
+  "question": "人可以退休，牙不能：它還要陪你吃很久",
+  "start": "2026-10-18",
+  "tagline": "熟齡、多數是女性；近四成在拖，居家護理多停在牙刷。",
+  "total": 1118,
+  "url": "reports/dental.html",
+  "links": []
+ },
+ {
+  "channel": "娛樂",
+  "end": "2026-10-23",
+  "ip": "TVBS新聞網",
+  "links": [
+   {
+    "label": "英文版",
+    "url": "reports/drama-en.html"
+   }
+  ],
+  "name": "短劇問卷",
+  "question": "手機短劇正夯，你追了嗎？",
+  "start": "2026-10-18",
+  "tagline": "74% 看過短劇，但 82% 過去一個月一毛沒花；他們要的是免費、少廣告。",
+  "total": 1169,
+  "url": "reports/drama.html"
+ },
+ {
+  "channel": "多版位",
+  "end": "2026-10-25",
+  "ip": "TVBS新聞網",
+  "name": "貓狗問卷",
+  "placement": "9 個 IP 與文章分類",
+  "question": "現在養貓狗的數量已經比小孩還多了，你貓派還狗派？",
+  "start": "2026-10-23",
+  "tagline": "多半在 30–49 歲、住北部；貓派多過狗派，約三分之一不在貓狗之列。",
+  "total": 3017,
+  "url": "reports/pet.html",
+  "links": []
+ },
+ {
+  "end": "2026-09-05",
+  "ip": "健康2.0",
+  "name": "退休問卷",
+  "placement": "健康2.0 站內",
+  "question": "55 歲後的第二人生，你想怎麼過？",
+  "start": "2026-08-25",
+  "tagline": "58% 已退休或 5 年內退休；理財到位的是少數，一半的人想讓現有的錢更有效率。",
+  "total": 1621,
+  "url": "reports/retire.html",
+  "links": []
+ },
+ {
+  "channel": "財經",
+  "end": "2026-10-15",
+  "ip": "TVBS新聞網",
+  "name": "台股問卷",
+  "placement": "財經新聞文章內嵌",
+  "question": "台股不斷創新高，大家真的都賺到了嗎？",
+  "start": "2026-10-13",
+  "tagline": "財經讀者多半已經下場，卻覺得沒跟上這波；缺的是「我現在該怎麼辦」。",
+  "total": 1577,
+  "url": "reports/stock.html",
+  "links": []
+ }
+];</script>
+<script>
+(function(){
+  var DAY=86400000;
+  var KNOWN={'健康2.0':'--c-health','TVBS財經':'--c-fin','TVBS娛樂':'--c-ent','TVBS新聞網':'--c-news'};
+  var EXTRA=['--c-x1','--c-x2','--c-x3','--c-x4'];
+  var docs=[], ipFilter='all', sortBy='start', ready=false, failed=false;
+
+  function day(s){var p=String(s).split('-').map(Number);return Date.UTC(p[0],p[1]-1,p[2])/DAY}
+  function md(s){var p=String(s).split('-');return (+p[1])+'/'+(+p[2])}
+  function fmt(n){return Number(n).toLocaleString('en-US')}
+  function color(ip){
+    if(KNOWN[ip]) return 'var('+KNOWN[ip]+')';
+    var h=0;for(var i=0;i<ip.length;i++)h=(h*31+ip.charCodeAt(i))>>>0;
+    return 'var('+EXTRA[h%EXTRA.length]+')';
+  }
+  function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+  function safe(u){return typeof u==='string'&&/^reports\/[\w-]+\.html$/.test(u)}
+  function valid(d){return d&&d.name&&d.ip&&d.start&&d.end&&isFinite(day(d.start))&&isFinite(day(d.end))}
+
+  function ipList(){
+    var seen={},out=[];
+    docs.forEach(function(d){if(!seen[d.ip]){seen[d.ip]=0;out.push(d.ip)}seen[d.ip]++});
+    var order=Object.keys(KNOWN);
+    out.sort(function(a,b){var ia=order.indexOf(a),ib=order.indexOf(b);return (ia<0?99:ia)-(ib<0?99:ib)});
+    return out.map(function(ip){return {ip:ip,n:seen[ip]}});
+  }
+
+  function renderStats(){
+    var n=docs.length, t=0, lo=Infinity, hi=-Infinity;
+    docs.forEach(function(d){t+=Number(d.total)||0;lo=Math.min(lo,day(d.start));hi=Math.max(hi,day(d.end))});
+    document.getElementById('s-n').textContent=n?String(n):'0';
+    document.getElementById('s-t').textContent=n?fmt(t):'0';
+    document.getElementById('s-r').textContent=n?(md(new Date(lo*DAY).toISOString().slice(0,10))+' – '+md(new Date(hi*DAY).toISOString().slice(0,10))):'—';
+  }
+
+  function renderTimeline(){
+    var box=document.getElementById('tl');box.textContent='';
+    if(!docs.length){box.appendChild(Object.assign(el('div','empty'),{}));box.firstChild.style.gridColumn='1/-1';box.firstChild.appendChild(el('b',null,failed?'資料庫暫時打不開':(ready?'還沒有問卷':'載入問卷中…')));return}
+    var lo=Infinity,hi=-Infinity;
+    docs.forEach(function(d){lo=Math.min(lo,day(d.start));hi=Math.max(hi,day(d.end)+1)});
+    var span=hi-lo;
+    var axisL=el('div'),axis=el('div','tl-axis');
+    // weekly ticks on Mondays (1970-01-05 is a Monday)
+    var first=lo+((8-((lo-4)%7+7)%7)%7);
+    for(var t=first;t<hi;t+=7){
+      var s=el('span',null,md(new Date(t*DAY).toISOString().slice(0,10)));
+      s.style.left=((t-lo)/span*100)+'%';axis.appendChild(s);
+    }
+    box.appendChild(axisL);box.appendChild(axis);
+    var rows=docs.slice().sort(function(a,b){return day(a.start)-day(b.start)||day(a.end)-day(b.end)});
+    var wk=(7/span*100)+'%';
+    rows.forEach(function(d){
+      var dim=ipFilter!=='all'&&d.ip!==ipFilter;
+      var lab=el('div','tl-lab'+(dim?' dim':''),d.name);lab.appendChild(el('small',null,fmt(d.total)+' 份'));
+      var tr=el('div','tl-track'+(dim?' dim':''));tr.style.setProperty('--wk',wk);
+      var bar=el('div','tl-bar');
+      bar.style.left=((day(d.start)-lo)/span*100)+'%';
+      bar.style.width=((day(d.end)+1-day(d.start))/span*100)+'%';
+      bar.style.background=color(d.ip);
+      bar.title=d.name+'  '+md(d.start)+' – '+md(d.end);
+      tr.appendChild(bar);box.appendChild(lab);box.appendChild(tr);
+    });
+  }
+
+  function renderChips(){
+    var c=document.getElementById('chips');c.textContent='';
+    function chip(key,label,n,col){
+      var b=el('button','chip');b.type='button';b.setAttribute('aria-pressed',String(ipFilter===key));
+      if(col){var i=el('i');i.style.background=col;b.appendChild(i)}
+      b.appendChild(document.createTextNode(label+' '));b.appendChild(el('em',null,String(n)));
+      b.addEventListener('click',function(){ipFilter=key;renderAll()});c.appendChild(b);
+    }
+    chip('all','全部',docs.length,null);
+    ipList().forEach(function(x){chip(x.ip,x.ip,x.n,color(x.ip))});
+  }
+
+  function renderCards(){
+    var g=document.getElementById('grid');g.textContent='';
+    var list=docs.filter(function(d){return ipFilter==='all'||d.ip===ipFilter});
+    list.sort(function(a,b){return sortBy==='total'?(Number(b.total)||0)-(Number(a.total)||0):day(b.start)-day(a.start)});
+    if(!list.length){
+      var e=el('div','empty panel');e.style.gridColumn='1/-1';
+      e.appendChild(el('b',null,failed?'資料庫暫時打不開':(ready?'沒有符合的問卷':'載入問卷中…')));
+      if(ready&&!docs.length)e.appendChild(el('span',null,'新增問卷後，這裡會出現卡片。'));
+      g.appendChild(e);return;
+    }
+    list.forEach(function(d){
+      var c=el('article','card');
+      var w=el('div','where');var dot=el('i');dot.style.background=color(d.ip);w.appendChild(dot);
+      w.appendChild(el('b',null,d.ip));if(d.channel)w.appendChild(el('b',null,'· '+d.channel));if(d.placement)w.appendChild(el('span',null,'· '+d.placement));
+      c.appendChild(w);
+      c.appendChild(el('h3',null,d.name));
+      if(d.question)c.appendChild(el('p','q','「'+d.question+'」'));
+      var nums=el('div','nums');var n=el('div','n',fmt(d.total));n.appendChild(el('small',null,'份回覆'));
+      nums.appendChild(n);nums.appendChild(el('div','p',md(d.start)+' – '+md(d.end)));c.appendChild(nums);
+      if(d.tagline)c.appendChild(el('p','ta',d.tagline));
+      var act=el('div','act');
+      if(safe(d.url)){var a=el('a','btn','看報告 ↗');a.href=d.url;a.target='_blank';a.rel='noopener noreferrer';act.appendChild(a)}
+      (d.links||[]).forEach(function(l){
+        if(l&&safe(l.url)&&l.label){var b=el('a','btn alt',l.label+' ↗');b.href=l.url;b.target='_blank';b.rel='noopener noreferrer';act.appendChild(b)}
+      });
+      if(act.childNodes.length)c.appendChild(act);
+      g.appendChild(c);
+    });
+  }
+
+  function renderAll(){renderStats();renderTimeline();renderChips();renderCards()}
+  document.getElementById('sort').addEventListener('change',function(e){sortBy=e.target.value;renderCards()});
+  renderAll();
+
+  function start(){
+    docs=(window.__SURVEYS||[]).filter(valid);ready=true;failed=false;renderAll();
+  }
+  start();
+})();
+</script>
+</body>
+</html>

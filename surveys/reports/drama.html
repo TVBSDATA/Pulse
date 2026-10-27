@@ -1,0 +1,123 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>短劇問卷 Insight</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<style>
+:root{--bg:#f6f5f9;--fg:#17141f;--mut:#6a6578;--card:#fff;--line:#e3e0ec;--acc:#d6245f;--acc2:#4b3fd0;--soft:#fbe6ee;--cool:#4b3fd0;--ok:#1d8a5c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f0d16;--fg:#f0eef6;--mut:#a29cb3;--card:#191625;--line:#2d2940;--acc:#ff5c8f;--acc2:#8f86ff;--soft:#3a1a29;--cool:#8f86ff;--ok:#4cc794;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f0d16;--fg:#f0eef6;--mut:#a29cb3;--card:#191625;--line:#2d2940;--acc:#ff5c8f;--acc2:#8f86ff;--soft:#3a1a29;--cool:#8f86ff;--ok:#4cc794;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:"Noto Sans TC",system-ui,sans-serif;line-height:1.7;font-size:15px;padding-block:24px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.w{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+h1{font-size:clamp(26px,5vw,40px);line-height:1.25;margin:0;text-wrap:balance;font-weight:900}
+h2{font-size:22px;margin:0 0 4px;font-weight:900}
+h3{font-size:15px;margin:0 0 10px;font-weight:700}
+p{margin:0}.mut{color:var(--mut);font-size:13px}
+nav{display:flex;gap:8px;flex-wrap:wrap}nav a{color:var(--fg);text-decoration:none;border:1px solid var(--line);border-radius:99px;padding:3px 14px;font-size:13px;background:var(--card)}
+nav a:hover{border-color:var(--acc)}
+.sum{font-size:17px;max-width:46em}.sum b{color:var(--acc)}
+.g4{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.c{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;min-width:0}
+.kpi b{display:block;font-size:34px;font-weight:900;color:var(--acc);font-variant-numeric:tabular-nums;line-height:1.2}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 24px}.meta div span{display:block;font-size:12px;color:var(--mut)}
+.bars{display:flex;flex-direction:column;gap:6px}.br{display:grid;grid-template-columns:minmax(90px,38%) 1fr 44px;gap:8px;align-items:center;font-size:13px}
+.bl{min-width:0}.bt{background:var(--line);border-radius:3px;height:10px;overflow:hidden}.bt i{display:block;height:100%}
+.br b{text-align:right;font-variant-numeric:tabular-nums}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
+th,td{padding:6px 8px;text-align:center;border-bottom:1px solid var(--line)}th small{font-weight:400;color:var(--mut)}
+td.rl{text-align:left;max-width:240px}
+td[style]{background:color-mix(in srgb,var(--cool) calc(var(--p)*1%),transparent);font-variant-numeric:tabular-nums}
+.tag{font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--mut);display:block;margin-top:8px}
+.card p+p{margin-top:2px}
+.card .ok{color:var(--ok)}.card .unk{color:var(--acc)}
+.pill{display:inline-block;font-size:12px;background:var(--soft);color:var(--acc);border-radius:99px;padding:1px 10px;margin-bottom:6px;font-weight:700}
+.sec{display:flex;flex-direction:column;gap:14px}
+.grp{display:flex;height:34px;border-radius:6px;overflow:hidden;font-size:12px;color:#fff}.grp span{display:flex;align-items:center;justify-content:center;white-space:nowrap;overflow:hidden}
+ul{margin:0;padding-left:1.2em}li{margin:2px 0}
+footer{font-size:12.5px;color:var(--mut);border-top:1px solid var(--line);padding-top:16px}
+
+.hr{padding-bottom:22px}.hb{display:flex;align-items:flex-end;gap:1px;height:140px}.hb i{flex:1;min-width:1px;background:var(--acc2);border-radius:1px 1px 0 0}
+.hd{position:relative;height:0}.hd span{position:absolute;top:6px;font-size:11px;color:var(--mut);transform:translateX(-1px)}
+.hod{display:grid;grid-template-columns:repeat(24,1fr);gap:3px;align-items:end;height:190px}.hod div{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;gap:2px;min-width:0}
+.hod i{width:100%;background:var(--acc);border-radius:2px 2px 0 0;display:block}.hod b{font-size:10px;font-variant-numeric:tabular-nums}.hod span{font-size:10px;color:var(--mut)}
+@media (max-width:560px){.hod b{font-size:8px}.hod{gap:2px}}
+</style>
+<div class="w">
+<header class="sec">
+<h1>短劇很多人在追，只有 9% 掏過錢</h1>
+<p class="sum">1,169 份回覆裡，74% 看過短劇，41% 說「只再看一集」是騙人的；但 <b>82% 過去一個月一毛沒花</b>。這群讀者要的是免費、少廣告，變現得靠廣告與內容，不靠訂閱。</p>
+<nav><a href="#a">01 他們是誰</a><a href="#b">02 他們在想什麼</a><a href="#c">03 怎麼用</a></nav>
+</header>
+
+<section class="c"><h3>問卷基本資料</h3><div class="meta">
+<div><span>問卷</span>手機短劇正夯，你追了嗎？</div>
+<div><span>收集期間</span>2026/10/18 01:18 – 10/23 15:30（提前關閉，原訂 10/31 截止）</div>
+<div><span>題目</span>9 題（7 題選擇、性別、出生年）</div>
+<div><span>回收</span>1,169 份回覆，1,096 個不重複瀏覽器</div>
+<div><span>防重複</span>同一個瀏覽器填完後，就不會再看到這份問卷</div>
+<div><span>放置位置</span>TVBS 新聞・娛樂新聞</div><div><span>頻道規模</span>DAU 平常 20–30 萬，大新聞約 40 萬；9 月 MAU 476 萬</div><div><span>頻道 UU</span>10/18–10/23 共 74 萬</div><div><span>樣本占比</span>1,096 個瀏覽器，約為同期頻道 UU 的 0.15%（僅說明回收規模，不代表頻道全體）</div>
+<div><span>有效年齡</span>969 份（中位數 47 歲）</div></div></section>
+
+<section id="a" class="sec"><div><h2>01 他們是誰</h2><p class="mut">讀者輪廓，自願填答，不代表全站。</p></div>
+<div class="g4">
+<div class="c kpi"><b>74%</b>看過短劇</div>
+<div class="c kpi"><b>41%</b>追到停不下來</div>
+<div class="c kpi"><b>82%</b>一個月 0 元</div>
+<div class="c kpi"><b>9%</b>有掏錢（102 人）</div></div>
+<div class="c"><h3>四種處境，每人只屬一組</h3><div class="grp"><span style="width:8.7%;background:#d6245f">掏錢型 9%</span><span style="width:36.2%;background:#8f3fd0">免費上癮型 36%</span><span style="width:31.3%;background:#4b6fd0">跟風淺嘗型 31%</span><span style="width:23.8%;background:#7a7690">圍觀型 24%</span></div>
+<p class="mut" style="margin-top:8px">判定順序：① 過去一個月有花錢＝掏錢型 ② 沒興趣或聽過沒看＝圍觀型 ③ 說只再看一集是騙人的＝免費上癮型 ④ 其餘＝跟風淺嘗型。</p></div>
+<div class="g3">
+<div class="c"><h3>最常去哪看（可複選）</h3><div class="bars"><div class="br"><span class="bl">YouTube</span><span class="bt"><i style="width:100.0%;background:var(--acc)"></i></span><b>49%</b></div><div class="br"><span class="bl">紅果短劇</span><span class="bt"><i style="width:61.6%;background:var(--acc)"></i></span><b>30%</b></div><div class="br"><span class="bl">臉書</span><span class="bt"><i style="width:27.3%;background:var(--acc)"></i></span><b>13%</b></div><div class="br"><span class="bl">其他短劇 App</span><span class="bt"><i style="width:19.3%;background:var(--acc)"></i></span><b>9%</b></div><div class="br"><span class="bl">ReelShort</span><span class="bt"><i style="width:16.7%;background:var(--acc)"></i></span><b>8%</b></div><div class="br"><span class="bl">DramaBox</span><span class="bt"><i style="width:13.0%;background:var(--acc)"></i></span><b>6%</b></div><div class="br"><span class="bl">抖音</span><span class="bt"><i style="width:12.2%;background:var(--acc)"></i></span><b>6%</b></div><div class="br"><span class="bl">IG</span><span class="bt"><i style="width:10.6%;background:var(--acc)"></i></span><b>5%</b></div></div></div>
+<div class="c"><h3>過去一個月花多少</h3><div class="bars"><div class="br"><span class="bl">0 元，我只看免費的</span><span class="bt"><i style="width:100.0%;background:var(--acc)"></i></span><b>82%</b></div><div class="br"><span class="bl">沒看過短劇</span><span class="bt"><i style="width:10.9%;background:var(--acc)"></i></span><b>9%</b></div><div class="br"><span class="bl">100 元以內，偶爾買單一下</span><span class="bt"><i style="width:4.6%;background:var(--acc)"></i></span><b>4%</b></div><div class="br"><span class="bl">301–1,000 元</span><span class="bt"><i style="width:2.5%;background:var(--acc)"></i></span><b>2%</b></div><div class="br"><span class="bl">101–300 元</span><span class="bt"><i style="width:2.0%;background:var(--acc)"></i></span><b>2%</b></div><div class="br"><span class="bl">超過 1,000 元，停不下來</span><span class="bt"><i style="width:1.6%;background:var(--acc)"></i></span><b>1%</b></div></div></div></div>
+<div class="c"><h3>年齡 × 處境（橫列占比）</h3><div class="tw"><table><thead><tr><th>年齡</th><th>掏錢型</th><th>免費上癮型</th><th>跟風淺嘗型</th><th>圍觀型</th><th>人數</th></tr></thead><tbody><tr><td>15–29</td><td style="--p:10">10%</td><td style="--p:28">28%</td><td style="--p:29">29%</td><td style="--p:33">33%</td><td>116</td></tr><tr><td>30–39</td><td style="--p:8">8%</td><td style="--p:33">33%</td><td style="--p:32">32%</td><td style="--p:27">27%</td><td>178</td></tr><tr><td>40–49</td><td style="--p:11">11%</td><td style="--p:37">37%</td><td style="--p:32">32%</td><td style="--p:20">20%</td><td>276</td></tr><tr><td>50–59</td><td style="--p:6">6%</td><td style="--p:47">47%</td><td style="--p:31">31%</td><td style="--p:16">16%</td><td>233</td></tr><tr><td>60+</td><td style="--p:4">4%</td><td style="--p:46">46%</td><td style="--p:37">37%</td><td style="--p:12">12%</td><td>166</td></tr></tbody></table></div>
+<p class="mut" style="margin-top:8px">中位年齡：掏錢型 44 歲、免費上癮型 49 歲、圍觀型 42 歲。圍觀的反而比較年輕。</p></div>
+<div class="c"><h3>每小時回收</h3><div class="hr"><div class="hb"><i style="height:0.0%"></i><i style="height:8.8%"></i><i style="height:2.9%"></i><i style="height:2.9%"></i><i style="height:0.0%"></i><i style="height:2.9%"></i><i style="height:5.9%"></i><i style="height:2.9%"></i><i style="height:5.9%"></i><i style="height:8.8%"></i><i style="height:8.8%"></i><i style="height:5.9%"></i><i style="height:5.9%"></i><i style="height:0.0%"></i><i style="height:11.8%"></i><i style="height:17.6%"></i><i style="height:11.8%"></i><i style="height:20.6%"></i><i style="height:14.7%"></i><i style="height:55.9%"></i><i style="height:50.0%"></i><i style="height:20.6%"></i><i style="height:26.5%"></i><i style="height:14.7%"></i><i style="height:5.9%"></i><i style="height:2.9%"></i><i style="height:0.0%"></i><i style="height:0.0%"></i><i style="height:0.0%"></i><i style="height:5.9%"></i><i style="height:14.7%"></i><i style="height:26.5%"></i><i style="height:26.5%"></i><i style="height:32.4%"></i><i style="height:20.6%"></i><i style="height:17.6%"></i><i style="height:14.7%"></i><i style="height:8.8%"></i><i style="height:41.2%"></i><i style="height:47.1%"></i><i style="height:26.5%"></i><i style="height:50.0%"></i><i style="height:32.4%"></i><i style="height:44.1%"></i><i style="height:26.5%"></i><i style="height:11.8%"></i><i style="height:23.5%"></i><i style="height:8.8%"></i><i style="height:17.6%"></i><i style="height:8.8%"></i><i style="height:2.9%"></i><i style="height:2.9%"></i><i style="height:0.0%"></i><i style="height:8.8%"></i><i style="height:2.9%"></i><i style="height:23.5%"></i><i style="height:38.2%"></i><i style="height:55.9%"></i><i style="height:50.0%"></i><i style="height:52.9%"></i><i style="height:73.5%"></i><i style="height:41.2%"></i><i style="height:44.1%"></i><i style="height:52.9%"></i><i style="height:26.5%"></i><i style="height:41.2%"></i><i style="height:23.5%"></i><i style="height:64.7%"></i><i style="height:58.8%"></i><i style="height:44.1%"></i><i style="height:35.3%"></i><i style="height:44.1%"></i><i style="height:8.8%"></i><i style="height:8.8%"></i><i style="height:11.8%"></i><i style="height:5.9%"></i><i style="height:5.9%"></i><i style="height:0.0%"></i><i style="height:11.8%"></i><i style="height:17.6%"></i><i style="height:32.4%"></i><i style="height:41.2%"></i><i style="height:29.4%"></i><i style="height:41.2%"></i><i style="height:29.4%"></i><i style="height:32.4%"></i><i style="height:100.0%"></i><i style="height:55.9%"></i><i style="height:55.9%"></i><i style="height:79.4%"></i><i style="height:23.5%"></i><i style="height:38.2%"></i><i style="height:52.9%"></i><i style="height:38.2%"></i><i style="height:44.1%"></i><i style="height:32.4%"></i><i style="height:23.5%"></i><i style="height:11.8%"></i><i style="height:14.7%"></i><i style="height:5.9%"></i><i style="height:2.9%"></i><i style="height:8.8%"></i><i style="height:44.1%"></i><i style="height:70.6%"></i><i style="height:58.8%"></i><i style="height:32.4%"></i><i style="height:11.8%"></i><i style="height:35.3%"></i><i style="height:32.4%"></i><i style="height:32.4%"></i><i style="height:35.3%"></i><i style="height:20.6%"></i><i style="height:32.4%"></i><i style="height:26.5%"></i><i style="height:26.5%"></i><i style="height:23.5%"></i><i style="height:11.8%"></i><i style="height:52.9%"></i><i style="height:47.1%"></i><i style="height:26.5%"></i><i style="height:5.9%"></i><i style="height:2.9%"></i><i style="height:11.8%"></i><i style="height:2.9%"></i><i style="height:0.0%"></i><i style="height:14.7%"></i><i style="height:26.5%"></i><i style="height:32.4%"></i><i style="height:8.8%"></i><i style="height:26.5%"></i><i style="height:26.5%"></i><i style="height:17.6%"></i><i style="height:67.6%"></i><i style="height:29.4%"></i><i style="height:44.1%"></i><i style="height:26.5%"></i></div><div class="hd"><span style="left:0.00%">10/18</span><span style="left:17.65%">10/19</span><span style="left:35.29%">10/20</span><span style="left:52.94%">10/21</span><span style="left:70.59%">10/22</span><span style="left:88.24%">10/23</span></div></div>
+<p class="mut" style="margin-top:6px">台灣時間，從 10/18 0 點起算，沒有回覆的小時為 0。第一筆 10/18 01:18，最後一筆 10/23 15:30。</p></div>
+<div class="c"><h3>一天的哪些時段</h3><div class="hod"><div><b>21</b><i style="height:22.3%"></i><span>0</span></div><div><b>15</b><i style="height:16.0%"></i><span>1</span></div><div><b>15</b><i style="height:16.0%"></i><span>2</span></div><div><b>7</b><i style="height:7.4%"></i><span>3</span></div><div><b>3</b><i style="height:3.2%"></i><span>4</span></div><div><b>14</b><i style="height:14.9%"></i><span>5</span></div><div><b>36</b><i style="height:38.3%"></i><span>6</span></div><div><b>59</b><i style="height:62.8%"></i><span>7</span></div><div><b>58</b><i style="height:61.7%"></i><span>8</span></div><div><b>67</b><i style="height:71.3%"></i><span>9</span></div><div><b>50</b><i style="height:53.2%"></i><span>10</span></div><div><b>58</b><i style="height:61.7%"></i><span>11</span></div><div><b>76</b><i style="height:80.9%"></i><span>12</span></div><div><b>49</b><i style="height:52.1%"></i><span>13</span></div><div><b>94</b><i style="height:100.0%"></i><span>14</span></div><div><b>75</b><i style="height:79.8%"></i><span>15</span></div><div><b>52</b><i style="height:55.3%"></i><span>16</span></div><div><b>74</b><i style="height:78.7%"></i><span>17</span></div><div><b>41</b><i style="height:43.6%"></i><span>18</span></div><div><b>77</b><i style="height:81.9%"></i><span>19</span></div><div><b>68</b><i style="height:72.3%"></i><span>20</span></div><div><b>57</b><i style="height:60.6%"></i><span>21</span></div><div><b>60</b><i style="height:63.8%"></i><span>22</span></div><div><b>43</b><i style="height:45.7%"></i><span>23</span></div></div>
+<p class="mut" style="margin-top:8px">全期間各小時（台灣時間）的回覆數加總。最高是 14 點（94 則），其次 19 點（77 則）；凌晨 0–5 點合計 75 則。</p></div>
+</section>
+
+<section id="b" class="sec"><div><h2>02 他們在想什麼</h2></div>
+<div class="g3">
+<div class="c"><span class="pill">平台</span><h3>紅果是重度戶的家，YouTube 是大門</h3><p>YouTube 有 49% 最常去，紅果短劇 30%。免費上癮型裡紅果占 54%。被勾到的地方是 YouTube 43% 與臉書 41%，應用商店只有 2%。</p></div>
+<div class="c"><span class="pill">付費</span><h3>要錢的路很窄</h3><p>56% 要「每集免費或便宜到無感」，36% 要廣告少一點。掏錢型也有 39% 選免費或便宜。</p></div>
+<div class="c"><span class="pill">AI</span><h3>多數人不在乎是不是 AI</h3><p>73% 看得下去（含「少了點人味」），22% 知道是 AI 就滑掉。這 22% 集中在圍觀型：56% 不能接受。</p></div></div>
+<div class="g3">
+<div class="c"><h3>最愛劇情</h3><div class="bars"><div class="br"><span class="bl">逆襲復仇（重生、打臉、爽劇）</span><span class="bt"><i style="width:100.0%;background:var(--acc)"></i></span><b>39%</b></div><div class="br"><span class="bl">都會愛情（霸道總裁、甜寵、豪門）</span><span class="bt"><i style="width:92.1%;background:var(--acc)"></i></span><b>36%</b></div><div class="br"><span class="bl">輕鬆喜劇（搞笑、萌寵）</span><span class="bt"><i style="width:67.2%;background:var(--acc)"></i></span><b>26%</b></div><div class="br"><span class="bl">玄幻奇幻（穿越、修仙、狼人、吸血鬼）</span><span class="bt"><i style="width:59.7%;background:var(--acc)"></i></span><b>23%</b></div><div class="br"><span class="bl">家庭情感（婆媳、婚姻、親情）</span><span class="bt"><i style="width:43.0%;background:var(--acc)"></i></span><b>17%</b></div><div class="br"><span class="bl">校園青春（戀愛、成長）</span><span class="bt"><i style="width:32.6%;background:var(--acc)"></i></span><b>13%</b></div><div class="br"><span class="bl">懸疑推理（反轉、燒腦）</span><span class="bt"><i style="width:22.5%;background:var(--acc)"></i></span><b>9%</b></div><div class="br"><span class="bl">男男、女女愛情 ｜ 動畫、AI 漫劇</span><span class="bt"><i style="width:18.9%;background:var(--acc)"></i></span><b>7%</b></div></div></div>
+<div class="c"><h3>怎麼被勾到</h3><div class="bars"><div class="br"><span class="bl">YouTube</span><span class="bt"><i style="width:100.0%;background:var(--acc)"></i></span><b>43%</b></div><div class="br"><span class="bl">臉書</span><span class="bt"><i style="width:95.0%;background:var(--acc)"></i></span><b>41%</b></div><div class="br"><span class="bl">抖音</span><span class="bt"><i style="width:34.6%;background:var(--acc)"></i></span><b>15%</b></div><div class="br"><span class="bl">IG</span><span class="bt"><i style="width:27.0%;background:var(--acc)"></i></span><b>12%</b></div><div class="br"><span class="bl">LINE 群組、朋友轉傳</span><span class="bt"><i style="width:13.0%;background:var(--acc)"></i></span><b>6%</b></div><div class="br"><span class="bl">應用商店（App Store、Google Play）</span><span class="bt"><i style="width:5.2%;background:var(--acc)"></i></span><b>2%</b></div></div></div>
+<div class="c"><h3>想要 App 有什麼</h3><div class="bars"><div class="br"><span class="bl">每集都免費，或便宜到無感</span><span class="bt"><i style="width:100.0%;background:var(--acc)"></i></span><b>56%</b></div><div class="br"><span class="bl">廣告少一點</span><span class="bt"><i style="width:64.3%;background:var(--acc)"></i></span><b>36%</b></div><div class="br"><span class="bl">我應該不會用短劇 App</span><span class="bt"><i style="width:30.5%;background:var(--acc)"></i></span><b>17%</b></div><div class="br"><span class="bl">劇情不要千篇一律</span><span class="bt"><i style="width:29.3%;background:var(--acc)"></i></span><b>17%</b></div><div class="br"><span class="bl">有人幫我挑好劇，不用自己找</span><span class="bt"><i style="width:17.0%;background:var(--acc)"></i></span><b>10%</b></div><div class="br"><span class="bl">字幕翻譯自然，像台灣人講話</span><span class="bt"><i style="width:11.2%;background:var(--acc)"></i></span><b>6%</b></div><div class="br"><span class="bl">有台灣的演員、台灣的故事</span><span class="bt"><i style="width:4.2%;background:var(--acc)"></i></span><b>2%</b></div></div></div></div>
+<div class="c"><h3>處境 × AI 短劇態度</h3><div class="tw"><table><thead><tr><th></th><th>掏錢型<br><small>n=102</small></th><th>免費上癮型<br><small>n=423</small></th><th>跟風淺嘗型<br><small>n=366</small></th><th>圍觀型<br><small>n=278</small></th></tr></thead><tbody><tr><td class="rl">好看就好，管誰演</td><td style="--p:27"><span>27%</span></td><td style="--p:56"><span>56%</span></td><td style="--p:34"><span>34%</span></td><td style="--p:12"><span>12%</span></td></tr><tr><td class="rl">少了點人味，但可能還是會看</td><td style="--p:30"><span>30%</span></td><td style="--p:27"><span>27%</span></td><td style="--p:44"><span>44%</span></td><td style="--p:19"><span>19%</span></td></tr><tr><td class="rl">不太能接受，知道是 AI 就滑掉</td><td style="--p:12"><span>12%</span></td><td style="--p:9"><span>9%</span></td><td style="--p:13"><span>13%</span></td><td style="--p:56"><span>56%</span></td></tr><tr><td class="rl">很新鮮，想多看</td><td style="--p:15"><span>15%</span></td><td style="--p:7"><span>7%</span></td><td style="--p:7"><span>7%</span></td><td style="--p:1"><span>1%</span></td></tr><tr><td class="rl">我分不出來哪些是 AI</td><td style="--p:16"><span>16%</span></td><td style="--p:2"><span>2%</span></td><td style="--p:2"><span>2%</span></td><td style="--p:12"><span>12%</span></td></tr></tbody></table></div><p class="mut" style="margin-top:8px">藍色越明顯，占比越高。</p></div>
+<div class="c"><h3>處境 × 想要 App 有什麼</h3><div class="tw"><table><thead><tr><th></th><th>掏錢型<br><small>n=102</small></th><th>免費上癮型<br><small>n=423</small></th><th>跟風淺嘗型<br><small>n=366</small></th><th>圍觀型<br><small>n=278</small></th></tr></thead><tbody><tr><td class="rl">每集都免費，或便宜到無感</td><td style="--p:39"><span>39%</span></td><td style="--p:76"><span>76%</span></td><td style="--p:59"><span>59%</span></td><td style="--p:29"><span>29%</span></td></tr><tr><td class="rl">廣告少一點</td><td style="--p:39"><span>39%</span></td><td style="--p:40"><span>40%</span></td><td style="--p:42"><span>42%</span></td><td style="--p:21"><span>21%</span></td></tr><tr><td class="rl">我應該不會用短劇 App</td><td style="--p:5"><span>5%</span></td><td style="--p:3"><span>3%</span></td><td style="--p:12"><span>12%</span></td><td style="--p:51"><span>51%</span></td></tr><tr><td class="rl">劇情不要千篇一律</td><td style="--p:23"><span>23%</span></td><td style="--p:18"><span>18%</span></td><td style="--p:19"><span>19%</span></td><td style="--p:9"><span>9%</span></td></tr><tr><td class="rl">有人幫我挑好劇，不用自己找</td><td style="--p:19"><span>19%</span></td><td style="--p:11"><span>11%</span></td><td style="--p:8"><span>8%</span></td><td style="--p:6"><span>6%</span></td></tr><tr><td class="rl">字幕翻譯自然，像台灣人講話</td><td style="--p:14"><span>14%</span></td><td style="--p:4"><span>4%</span></td><td style="--p:5"><span>5%</span></td><td style="--p:8"><span>8%</span></td></tr><tr><td class="rl">有台灣的演員、台灣的故事</td><td style="--p:3"><span>3%</span></td><td style="--p:1"><span>1%</span></td><td style="--p:2"><span>2%</span></td><td style="--p:4"><span>4%</span></td></tr></tbody></table></div></div>
+</section>
+
+<section id="c" class="sec"><div><h2>03 這些數字可以怎麼用</h2><p class="mut">每張卡分三層：問卷怎麼說、可以先試什麼、問卷沒問到的。</p></div>
+<div class="g3">
+<div class="c card"><span class="pill">題材</span><h3>逆襲與霸總，是現在的主流</h3>
+<span class="tag">問卷支持</span><p class="ok">逆襲復仇 39%、都會愛情 36%、輕鬆喜劇 26%、玄幻奇幻 23%。17% 希望劇情別千篇一律。</p>
+<span class="tag">可以先試</span><p>前兩個題材各做一批，再用一個喜劇或奇幻題材測差異；文章可從套路拆解切入。</p>
+<span class="tag">還不知道</span><p class="unk">單集長度、集數、具體作品。</p></div>
+<div class="c card"><span class="pill">付費</span><h3>免費是門檻，廣告要輕</h3>
+<span class="tag">問卷支持</span><p class="ok">82% 一個月 0 元；56% 要免費或便宜到無感；36% 要廣告少一點；17% 說不會用短劇 App。</p>
+<span class="tag">可以先試</span><p>以免費觀看為主，廣告量從少開始，單一品牌、低干擾的曝光；付費放第二階段。</p>
+<span class="tag">還不知道</span><p class="unk">願付價格、可承受的廣告秒數、廣告後的行動。</p></div>
+<div class="c card"><span class="pill">入口</span><h3>入口在社群，不在應用商店</h3>
+<span class="tag">問卷支持</span><p class="ok">被勾到：YouTube 43%、臉書 41%、抖音 15%；應用商店 2%。最常看：YouTube 49%、紅果短劇 30%、ReelShort 8%。</p>
+<span class="tag">可以先試</span><p>預告與精華放 YouTube、臉書，看導回的比例。</p>
+<span class="tag">還不知道</span><p class="unk">導流轉換率、各平台的單次獲客成本。</p></div>
+<div class="c card"><span class="pill">AI</span><h3>多數人不在乎是不是 AI</h3>
+<span class="tag">問卷支持</span><p class="ok">73% 能接受 AI 短劇，5% 分不出來，22% 知道是 AI 就滑掉。</p>
+<span class="tag">可以先試</span><p>AI 內容可以做，標示清楚；做一則「AI 還是真人」小測驗，結果頁附問卷數字。</p>
+<span class="tag">還不知道</span><p class="unk">標示 AI 對觀看與品牌好感的影響。</p></div>
+<div class="c card"><span class="pill">族群</span><h3>重度戶與掏錢的小群體</h3>
+<span class="tag">問卷支持</span><p class="ok">41% 停不下來；102 人有花錢，其中 15 人超過 1,000 元。60 歲以上 166 人填答，88% 看過短劇。</p>
+<span class="tag">可以先試</span><p>掏錢型人數少，下一輪單獨深問；高齡讀者可從家庭情感題材與 LINE、臉書轉傳切入。</p>
+<span class="tag">還不知道</span><p class="unk">他們買什麼、在哪買、願付多少。</p></div>
+<div class="c card"><span class="pill">選片</span><h3>有人想要被挑好劇</h3>
+<span class="tag">問卷支持</span><p class="ok">10% 想要有人挑好劇；台灣演員與故事 2%；字幕像台灣人講話 6%。</p>
+<span class="tag">可以先試</span><p>做「本週精選」入口；在地化先當加分，不當主要賣點。</p>
+<span class="tag">還不知道</span><p class="unk">精選能否提高回訪、在地製作的價值。</p></div></div>
+</section>
+<footer>樣本為自願填答，同一個瀏覽器填完後不會再看到問卷，所以人數以瀏覽器計，不等於真人數，偏特定族群，一律視為讀者輪廓。性別選項中「其他／非二元」14 人、「不透露」114 人，樣本小，不做性別比較。年齡以 2026 減出生年，15–95 歲以外視為異常。處境分組規則見 01。掏錢型 102 人中，有 24 人在第 1 題自稱「沒興趣」或「聽過，還沒看」，但第 6 題填了有花錢，答案互相矛盾，仍依花錢歸入掏錢型，未剔除。回收已結束，為最終資料。</footer>
+</div>
+</body></html>
