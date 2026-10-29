@@ -1,0 +1,342 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>皮克敏問卷 Insight</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;700&display=swap">
+<style>
+:root{
+  --color-bg:#FFFFFF; --color-panel:#F5F6F8; --color-fg:#1B1F27; --color-fg-secondary:#3B4252; --color-fg-muted:#5F6776;
+  --color-border-line:#DFE3EA; --color-ok:#1E8E5A; --color-warn:#B7791F; --color-bad:#C93B3B;
+  --cds-rem-scale:1; --cds-radius:.5rem;
+  --cds-pad-xs:.375rem; --cds-pad-sm:.5rem; --cds-pad-md:.75rem; --cds-pad-lg:1rem; --cds-pad-xl:1.5rem;
+  --cds-gap-xs:.5rem; --cds-gap-sm:.75rem; --cds-gap-md:1rem; --cds-gap-lg:1.75rem; --cds-gap-xl:2.5rem;
+  --cds-font-size-caption:.75rem; --cds-font-size-body:.875rem; --cds-font-size-heading:.9375rem; --cds-font-size-title:1.375rem;
+  --cds-font-weight-medium:500; --cds-dur-slow:.45s;
+  --cds-border:rgba(27,31,39,.12); --cds-chart-grid:rgba(27,31,39,.10); --cds-chart-muted:#C3C2B7; --cds-chart-reference:#8A8F9B;
+  --cds-surface-popover:#FFFFFF; --cds-shadow-popover:0 8px 24px #0000001f,0 2px 6px #00000014;
+  --cds-chart-categorical-1:#2a78d6; --cds-chart-categorical-2:#eb6834; --cds-chart-categorical-3:#1baf7a; --cds-chart-categorical-4:#eda100;
+  --cds-chart-categorical-5:#e87ba4; --cds-chart-categorical-6:#008300; --cds-chart-categorical-7:#6250d6; --cds-chart-categorical-8:#e34948;
+  --font-anthropic-sans:"Noto Sans TC",ui-sans-serif,system-ui,-apple-system,"PingFang TC","Microsoft JhengHei","Segoe UI",sans-serif;
+  --font-anthropic-serif:"Noto Serif TC",ui-serif,"Songti TC",Georgia,serif;
+}
+@media (prefers-color-scheme:dark){:root{
+  --color-bg:#111318; --color-panel:#1A1D24; --color-fg:#ECEEF2; --color-fg-secondary:#C9CED8; --color-fg-muted:#9AA1AF;
+  --color-border-line:#2A2F3A; --color-ok:#4CC794; --color-warn:#E3B04B; --color-bad:#F07A7A;
+  --cds-border:rgba(236,238,242,.14); --cds-chart-grid:rgba(236,238,242,.12); --cds-chart-muted:#5f5e5a; --cds-chart-reference:#9AA1AF;
+  --cds-surface-popover:#232832; --cds-shadow-popover:0 8px 24px #00000052,0 2px 6px #0003;
+  --cds-chart-categorical-1:#3987e5; --cds-chart-categorical-2:#d95926; --cds-chart-categorical-3:#199e70; --cds-chart-categorical-4:#c98500;
+  --cds-chart-categorical-5:#d55181; --cds-chart-categorical-6:#008300; --cds-chart-categorical-7:#9085e9; --cds-chart-categorical-8:#e66767;
+  color-scheme:dark}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--color-bg);color:var(--color-fg);font-family:var(--font-anthropic-sans);line-height:1.6;
+  padding-block:32px 72px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+svg text{fill:currentColor}
+#dash-root,#dash-root .pg,#dash-root .sec,#dash-root .stack,#dash-root .card,#dash-root .wrap{min-width:0;max-width:100%}
+#dash-root .wrap{overflow-x:auto}
+</style>
+<style>
+#dash-root { --dash-gutter: clamp(12px, 3vw, 32px); }
+.pk { max-width: 1100px; margin-inline: auto; font-family: var(--font-anthropic-sans); font-size: 1.125rem; line-height: 1.65; color: var(--color-fg); }
+.pk * { box-sizing: border-box; }
+.pk h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: clamp(2.2rem, 5vw, 3.2rem); line-height: 1.15; margin: 0 0 .75rem; }
+.pk h2 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: 2rem; line-height: 1.2; margin: 3.5rem 0 .5rem; }
+.pk h3 { font-size: 1.25rem; font-weight: 600; line-height: 1.35; margin: 0 0 .5rem; }
+.pk p { margin: 0 0 .75rem; }
+.pk b { font-weight: 700; font-variant-numeric: tabular-nums; }
+.pk-eyebrow { font-size: 1rem; font-weight: 600; letter-spacing: .04em; margin-bottom: .5rem; }
+.pk-lead { font-size: 1.5rem; line-height: 1.5; margin-bottom: 1rem; }
+.pk-note { font-size: 1.0625rem; }
+.pk-nav { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.25rem 0 0; }
+.pk-nav a { color: var(--color-fg); border: 1px solid var(--color-border-line); border-radius: 999px; padding: .35rem 1rem; text-decoration: none; font-size: 1.0625rem; background: var(--color-panel); }
+.pk-nav a:hover { border-color: var(--color-fg); }
+.pk-sub { font-size: 1.125rem; margin-bottom: 1.25rem; }
+.pk-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); margin: 0 0 var(--cds-gap-md); break-inside: avoid; }
+.pk-card > h3:first-child { margin-top: 0; }
+.pk-cap { font-size: 1.0625rem; margin: 0 0 1rem; }
+.pk-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: var(--cds-gap-md); margin-bottom: var(--cds-gap-md); }
+.pk-grid .pk-card { margin: 0; }
+.pk-stat-l { font-size: 1.0625rem; font-weight: 600; }
+.pk-stat-v { font-family: var(--font-anthropic-serif); font-size: 3rem; line-height: 1.1; margin: .25rem 0; font-variant-numeric: tabular-nums; }
+.pk-stat-s { font-size: 1.0625rem; }
+.pk-dl { display: grid; grid-template-columns: minmax(8rem, 12rem) 1fr; gap: .6rem 1.25rem; margin: 0; }
+.pk-dl dt { font-weight: 600; }
+.pk-dl dd { margin: 0; }
+@media (max-width: 560px) { .pk-dl { grid-template-columns: 1fr; gap: .1rem; } .pk-dl dd { margin-bottom: .6rem; } }
+.pk-rules { display: grid; grid-template-columns: minmax(7rem, 9rem) 1fr; gap: .35rem 1rem; font-size: 1.0625rem; margin: 0 0 1.25rem; }
+.pk-rules dt { font-weight: 700; }
+.pk-rules dd { margin: 0; }
+.pk-bars { display: flex; flex-direction: column; gap: .75rem; }
+.pk-brow { display: grid; grid-template-columns: minmax(6.5rem, 9rem) 1fr minmax(7rem, 11rem); gap: .75rem; align-items: center; }
+.pk-bl { font-weight: 600; font-size: 1.0625rem; }
+.pk-track { background: color-mix(in srgb, var(--color-fg) 8%, transparent); border-radius: var(--cds-radius); height: 2rem; overflow: hidden; }
+.pk-fill { height: 100%; border-radius: var(--cds-radius); min-width: 2px; }
+.pk-bv { font-variant-numeric: tabular-nums; font-size: 1.0625rem; font-weight: 600; }
+@media (max-width: 640px) { .pk-brow { grid-template-columns: 1fr; gap: .25rem; } }
+.pk-cols { position: relative; display: flex; align-items: flex-end; gap: .5rem; min-height: 290px; }
+.pk-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; min-width: 0; }
+.pk-cv { font-weight: 700; font-size: 1.0625rem; font-variant-numeric: tabular-nums; margin-bottom: .25rem; }
+.pk-cbar { width: 100%; max-width: 4.5rem; border-radius: var(--cds-radius) var(--cds-radius) 0 0; }
+.pk-cl { font-weight: 600; font-size: 1.0625rem; margin-top: .4rem; }
+.pk-cn { font-size: 1rem; }
+.pk-tw { overflow-x: auto; }
+.pk-tbl { width: 100%; border-collapse: collapse; font-size: 1.0625rem; font-variant-numeric: tabular-nums; min-width: 38rem; }
+.pk-tbl th, .pk-tbl td { padding: .6rem .6rem; text-align: center; border-bottom: 1px solid var(--color-border-line); }
+.pk-tbl th { font-weight: 700; }
+.pk-tbl th:first-child, .pk-tbl td:first-child { text-align: left; font-weight: 700; white-space: nowrap; }
+.pk-hbars { position: relative; display: flex; align-items: flex-end; gap: 1px; height: 180px; border-bottom: 1px solid var(--color-border-line); }
+.pk-hbar { flex: 1; min-width: 1px; border-radius: 1px 1px 0 0; }
+.pk-hax { position: relative; height: 1.8rem; font-size: 1rem; }
+.pk-htick { position: absolute; transform: translateX(0); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.pk-hod { position: relative; display: grid; grid-template-columns: repeat(24, 1fr); gap: 3px; align-items: end; height: 240px; }
+.pk-hc { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; min-width: 0; }
+.pk-hn { font-size: .9375rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.pk-hb { width: 100%; border-radius: 2px 2px 0 0; }
+.pk-hl { font-size: .9375rem; margin-top: .25rem; font-variant-numeric: tabular-nums; }
+.pk-tip { display: none; position: absolute; z-index: 5; transform: translate(-50%, -100%); background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: 1rem; pointer-events: none; white-space: nowrap; }
+.pk-g { display: flex; flex-direction: column; gap: 1.25rem; }
+.pk-grow { display: grid; grid-template-columns: minmax(10rem, 15rem) 1fr minmax(7rem, 9rem); gap: .75rem 1rem; align-items: center; }
+.pk-gl { font-weight: 700; font-size: 1.0625rem; }
+.pk-gl small { display: block; font-weight: 400; font-size: 1rem; }
+.pk-gb { display: flex; flex-direction: column; gap: .35rem; }
+.pk-gbr { display: grid; grid-template-columns: 2rem 1fr 4.5rem; gap: .5rem; align-items: center; font-size: 1.0625rem; font-variant-numeric: tabular-nums; }
+.pk-badge { font-size: 1rem; font-weight: 600; border: 1px solid var(--color-border-line); border-radius: 999px; padding: .15rem .7rem; text-align: center; }
+.pk-badge.on { border-color: var(--color-fg); }
+@media (max-width: 760px) { .pk-grow { grid-template-columns: 1fr; } }
+.pk-legend { display: flex; gap: 1.25rem; flex-wrap: wrap; font-size: 1.0625rem; margin-bottom: 1rem; }
+.pk-legend i { display: inline-block; width: .9rem; height: .9rem; border-radius: 3px; margin-right: .4rem; vertical-align: -1px; }
+.pk-q { font-family: var(--font-anthropic-serif); font-size: 1.5rem; line-height: 1.35; margin: 0 0 .5rem; }
+.pk-gap { display: grid; grid-template-columns: minmax(8rem, 10rem) 1fr; gap: .4rem 1rem; margin: 0; }
+.pk-gap dt { font-weight: 700; }
+.pk-gap dd { margin: 0; }
+@media (max-width: 560px) { .pk-gap { grid-template-columns: 1fr; } .pk-gap dd { margin-bottom: .5rem; } }
+.pk-one { font-family: var(--font-anthropic-serif); font-size: 1.75rem; line-height: 1.45; margin: 0 0 1.25rem; }
+.pk-foot { margin-top: 3rem; font-size: 1.0625rem; }
+.pk-foot p { margin-bottom: .6rem; }
+[data-dash-source-state=error] { color: var(--color-bad); }
+@media print {
+  .pk-card { break-inside: avoid; }
+  .pk-grow, .pk-brow { break-inside: avoid; }
+  .pk, .pk * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .pk h2 { break-after: avoid; }
+  .pk-nav { display: none; }
+}
+</style>
+</head><body>
+<div id="dash-root"><meta name="dash-one-writer">
+
+
+<div class="pk">
+<header id="top">
+  <p class="pk-eyebrow">TVBS 健康2.0 · 站內問卷 Insight</p>
+  <h1>皮克敏問卷 Insight</h1>
+  <p class="pk-lead">45–64 歲占 <b data-key="ageMid">61.3%</b>，是這份問卷的主體。這個年齡層裡，<b data-key="m45PlayPct">57.8%</b> 還在玩，玩的人有 <b data-key="m45SpendPct">42.0%</b> 花過錢，<b data-key="m452kPct">11.0%</b> 花到 2,000 元以上。</p>
+  <p class="pk-sub"><b data-key="n">608</b> 份回覆裡，<b data-key="playPct">48.4%</b> 現在還在玩皮克敏，<b data-key="neverPct">44.2%</b> 沒玩過。這是願意填皮克敏問卷的讀者，不代表所有 45–64 歲。</p>
+  <p class="pk-note">問卷 10/23 起收件，10/29 結束。本頁資料到 <b data-key="last">10/29 13:29</b>。自願填答的讀者輪廓，不代表全站。</p>
+  <nav class="pk-nav" aria-label="章節">
+    <a href="#s01">01 他們是誰</a>
+    <a href="#s02">02 怎麼玩、怎麼花</a>
+    <a href="#s03">03 讀者的問題</a>
+    <a href="#s04">04 缺口與未知</a>
+    <a href="#s05">05 這群 TA 是誰</a>
+  </nav>
+</header>
+
+<section id="s00" style="margin-top:2rem">
+  <div class="pk-card" id="basics">
+    <h3>問卷基本資料</h3>
+    <dl class="pk-dl">
+      <dt>放置位置</dt><dd>TVBS 健康2.0 站內，偏 soft 的文章分類</dd>
+      <dt>站台規模</dt><dd>MAU 約 <b data-key="mau">400 萬–500 萬</b>、DAU 約 <b data-key="dau">20 萬–30 萬</b>（站台流量，非問卷資料；假日較低）</dd>
+      <dt>收集期間</dt><dd>10/23 00:00 起，10/29 結束收件。資料到 <b data-key="last">10/29 13:29</b>，台灣時間。</dd>
+      <dt>題目</dt><dd>4 題：跟皮克敏的關係、花費、性別、出生年</dd>
+      <dt>回收數</dt><dd><b data-key="n">608</b> 份回覆；性別有答 <b data-key="gAns">600</b> 份；有效年齡 <b data-key="ageN">511</b> 份</dd>
+      <dt>防重複</dt><dd>cookie 機制，以瀏覽器計，不等於真人數</dd>
+      <dt>樣本與站台</dt><dd>回覆數約占 MAU 的 <b data-key="share">0.012–0.015%</b>。只用來看樣本多大，不乘回全站</dd>
+    </dl>
+  </div>
+</section>
+
+<section id="s01">
+  <h2>01 他們是誰</h2>
+  <p class="pk-sub">分母都寫在數字旁邊。「＊」表示該組不到 30 人，僅供參考。</p>
+
+  <div class="pk-grid" id="keynums">
+    <div class="pk-card"><div class="pk-stat-l">現在還在玩</div><div class="pk-stat-v" data-key="playPct">48.4%</div><div class="pk-stat-s">每天報到＋順便走，<b data-key="playN">294</b> 人／全部 <b data-key="n">608</b> 人</div></div>
+    <div class="pk-card"><div class="pk-stat-l">出門一定帶著牠們</div><div class="pk-stat-v" data-key="pct_ev">37.0%</div><div class="pk-stat-s"><b data-key="n_ev">225</b> 人／全部 <b data-key="n">608</b> 人</div></div>
+    <div class="pk-card"><div class="pk-stat-l">還在玩的人裡，有花錢</div><div class="pk-stat-v" data-key="playSpendPct">41.2%</div><div class="pk-stat-s"><b data-key="playSpendN">121</b> 人／還在玩 <b data-key="playN">294</b> 人</div></div>
+    <div class="pk-card"><div class="pk-stat-l">年齡中位數</div><div class="pk-stat-v"><span data-key="ageMed">52</span> 歲</div><div class="pk-stat-s">有效年齡 <b data-key="ageN">511</b> 人</div></div>
+  </div>
+
+  <div class="pk-card" id="grp-card">
+    <h3>你跟皮克敏，現在是什麼關係？</h3>
+    <p class="pk-cap">依第 1 題分成五組，每人只屬一組。分組就是他們選的那一句：</p>
+    <dl class="pk-rules">
+      <dt>每天報到型</dt><dd>出門一定帶著牠們，一天沒開就心癢</dd>
+      <dt>順便走型</dt><dd>想到才開，走路順便養一下</dd>
+      <dt>退坑型</dt><dd>抓過一陣子，現在在手機裡躺著</dd>
+      <dt>旁觀型</dt><dd>沒玩，但身邊有人在玩</dd>
+      <dt>沒聽過型</dt><dd>皮克敏是什麼？</dd>
+    </dl>
+    <p class="pk-cap">「還在玩」＝每天報到型＋順便走型。</p>
+    <div style="min-height:14rem"><div class="pk-bars"><div class="pk-brow"><div class="pk-bl">每天報到型</div><div class="pk-track"><div class="pk-fill" style="width: 100%; background: var(--cds-chart-categorical-1);"></div></div><div class="pk-bv">37.0%（225 人）</div></div><div class="pk-brow"><div class="pk-bl">順便走型</div><div class="pk-track"><div class="pk-fill" style="width: 30.5405%; background: var(--cds-chart-categorical-2);"></div></div><div class="pk-bv">11.3%（69 人）</div></div><div class="pk-brow"><div class="pk-bl">退坑型</div><div class="pk-track"><div class="pk-fill" style="width: 20%; background: var(--cds-chart-categorical-3);"></div></div><div class="pk-bv">7.4%（45 人）</div></div><div class="pk-brow"><div class="pk-bl">旁觀型</div><div class="pk-track"><div class="pk-fill" style="width: 53.2432%; background: var(--cds-chart-categorical-4);"></div></div><div class="pk-bv">19.7%（120 人）</div></div><div class="pk-brow"><div class="pk-bl">沒聽過型</div><div class="pk-track"><div class="pk-fill" style="width: 66.2162%; background: var(--cds-chart-categorical-5);"></div></div><div class="pk-bv">24.5%（149 人）</div></div></div></div>
+  </div>
+
+  <div class="pk-card" id="age-card">
+    <h3>年齡分布</h3>
+    <p class="pk-cap">每 10 歲一組，<b data-key="ageN">511</b> 人有效年齡。45–64 歲占 <b data-key="ageMid">61.3%</b>；15–24 歲占 <b data-key="a1524Pct">2.5%</b>（<b data-key="a1524N">13</b> 人）。</p>
+    <div style="min-height:18rem"><div class="pk-cols"><div class="pk-col"><div class="pk-cv">2.5%＊</div><div class="pk-cbar" style="height: 14.9842px; background: var(--cds-chart-categorical-1);"></div><div class="pk-cl">15–24 歲</div><div class="pk-cn">13 人</div></div><div class="pk-col"><div class="pk-cv">9.8%</div><div class="pk-cbar" style="height: 58.7382px; background: var(--cds-chart-categorical-1);"></div><div class="pk-cl">25–34 歲</div><div class="pk-cn">50 人</div></div><div class="pk-col"><div class="pk-cv">15.7%</div><div class="pk-cbar" style="height: 94.1009px; background: var(--cds-chart-categorical-1);"></div><div class="pk-cl">35–44 歲</div><div class="pk-cn">80 人</div></div><div class="pk-col"><div class="pk-cv">29.5%</div><div class="pk-cbar" style="height: 176.814px; background: var(--cds-chart-categorical-1);"></div><div class="pk-cl">45–54 歲</div><div class="pk-cn">151 人</div></div><div class="pk-col"><div class="pk-cv">31.7%</div><div class="pk-cbar" style="height: 190px; background: var(--cds-chart-categorical-1);"></div><div class="pk-cl">55–64 歲</div><div class="pk-cn">162 人</div></div><div class="pk-col"><div class="pk-cv">10.0%</div><div class="pk-cbar" style="height: 59.9369px; background: var(--cds-chart-categorical-1);"></div><div class="pk-cl">65–74 歲</div><div class="pk-cn">51 人</div></div><div class="pk-col"><div class="pk-cv">0.8%＊</div><div class="pk-cbar" style="height: 4.79495px; background: var(--cds-chart-categorical-1);"></div><div class="pk-cl">75+ 歲</div><div class="pk-cn">4 人</div></div></div></div>
+  </div>
+
+  <div class="pk-card" id="agegrid-card">
+    <h3>年齡 × 處境</h3>
+    <p class="pk-cap">每一列加起來是 100%，看的是「這個年齡層裡，各組各占多少」。顏色越明顯，占比越高。65–74 歲有 <b data-key="age65nv">51.0%</b> 是沒聽過型（該年齡層 <b data-key="age65n">51</b> 人）；每天報到型在 45–54 歲占 <b data-key="ev4554Pct">50.3%</b>、55–64 歲占 <b data-key="ev5564Pct">45.1%</b>。</p>
+    <div class="pk-tw"><div style="min-height:16rem"><table class="pk-tbl"><tr><th>年齡</th><th>每天報到型</th><th>順便走型</th><th>退坑型</th><th>旁觀型</th><th>沒聽過型</th><th>人數</th></tr><tr><td>15–24 歲＊</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 14%, transparent);">23%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 18%, transparent);">31%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 9%, transparent);">15%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 18%, transparent);">31%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 0%, transparent);">0%</td><td>13</td></tr><tr><td>25–34 歲</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 19%, transparent);">32%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 12%, transparent);">20%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 0%, transparent);">0%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 17%, transparent);">28%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 12%, transparent);">20%</td><td>50</td></tr><tr><td>35–44 歲</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 20%, transparent);">33%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 10%, transparent);">16%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 4%, transparent);">6%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 12%, transparent);">20%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 15%, transparent);">25%</td><td>80</td></tr><tr><td>45–54 歲</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 30%, transparent);">50%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 8%, transparent);">13%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 4%, transparent);">7%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 9%, transparent);">15%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 9%, transparent);">15%</td><td>151</td></tr><tr><td>55–64 歲</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 27%, transparent);">45%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 4%, transparent);">7%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 6%, transparent);">10%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 11%, transparent);">18%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 12%, transparent);">20%</td><td>162</td></tr><tr><td>65–74 歲</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 17%, transparent);">27%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 1%, transparent);">2%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 5%, transparent);">8%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 7%, transparent);">12%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 31%, transparent);">51%</td><td>51</td></tr><tr><td>75+ 歲＊</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 0%, transparent);">0%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 0%, transparent);">0%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 15%, transparent);">25%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 0%, transparent);">0%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 45%, transparent);">75%</td><td>4</td></tr></table></div></div>
+  </div>
+
+  <div class="pk-card" id="hourly-card">
+    <h3>每小時回收</h3>
+    <p class="pk-cap">從 10/23 0 點起，每小時收到的回覆數，沒有回覆的小時是 0。台灣時間。第一筆 <b data-key="first">10/23 00:07</b>，最後一筆 <b data-key="last">10/29 13:29</b>。</p>
+    <div id="hourly" style="min-height:13rem"><div style="position: relative;"><div class="pk-hbars"><div class="pk-hbar" style="height: 17.6471%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 5.88235%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 0%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 0%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 0%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 0%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 52.9412%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 52.9412%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 23.5294%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 47.0588%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 23.5294%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 29.4118%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 17.6471%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 0%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 35.2941%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 35.2941%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 29.4118%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 41.1765%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 29.4118%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 29.4118%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 5.88235%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 23.5294%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 0%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 0%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 0%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 29.4118%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 41.1765%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 47.0588%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 47.0588%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 29.4118%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 5.88235%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 23.5294%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 17.6471%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 17.6471%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 23.5294%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 47.0588%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 47.0588%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 70.5882%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 29.4118%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 17.6471%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 5.88235%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 5.88235%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 0%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 17.6471%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 41.1765%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 41.1765%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 47.0588%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 64.7059%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 17.6471%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 47.0588%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 47.0588%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 17.6471%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 17.6471%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 23.5294%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 0%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 35.2941%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 29.4118%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 29.4118%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 17.6471%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 0%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 5.88235%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 5.88235%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 70.5882%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 100%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 41.1765%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 35.2941%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 29.4118%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 23.5294%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 35.2941%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 23.5294%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 5.88235%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 17.6471%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 17.6471%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 23.5294%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 41.1765%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 23.5294%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 29.4118%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 0%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 0%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 5.88235%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 0%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 17.6471%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 23.5294%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 0%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 29.4118%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 17.6471%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 100%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 35.2941%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 29.4118%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 17.6471%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 5.88235%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 0%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 23.5294%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 0%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 5.88235%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 5.88235%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 5.88235%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 5.88235%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 0%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 0%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 29.4118%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 29.4118%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 47.0588%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 23.5294%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 64.7059%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 52.9412%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 41.1765%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 29.4118%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 47.0588%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 17.6471%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 35.2941%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 35.2941%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 17.6471%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 23.5294%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 5.88235%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 0%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 0%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 11.7647%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 58.8235%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 70.5882%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 41.1765%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 35.2941%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 23.5294%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 35.2941%; background: var(--cds-chart-categorical-1);"></div><div class="pk-hbar" style="height: 52.9412%; background: var(--cds-chart-categorical-1);"></div></div><div class="pk-tip"></div><div class="pk-hax"><span class="pk-htick" style="left: 0%;">10/23</span><span class="pk-htick" style="left: 15.1899%;">10/24</span><span class="pk-htick" style="left: 30.3797%;">10/25</span><span class="pk-htick" style="left: 45.5696%;">10/26</span><span class="pk-htick" style="left: 60.7595%;">10/27</span><span class="pk-htick" style="left: 75.9494%;">10/28</span><span class="pk-htick" style="left: 91.1392%;">10/29</span></div></div></div>
+  </div>
+
+  <div class="pk-card" id="hod-card">
+    <h3>一天的哪些時段</h3>
+    <p class="pk-cap">0–23 點各一柱，全期間同一小時加總，柱上是則數。台灣時間。<b data-key="peakHr">8 點</b>最多（<b data-key="peakN">61</b> 則，占 <b data-key="peakPct">10.0%</b>）；7–9 點合計 <b data-key="m79Pct">25.5%</b>。</p>
+    <div id="hod" style="min-height:15rem"><div class="pk-hod"><div class="pk-hc"><div class="pk-hn">18</div><div class="pk-hb" style="height: 53.1148px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">0</div></div><div class="pk-hc"><div class="pk-hn">8</div><div class="pk-hb" style="height: 23.6066px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">1</div></div><div class="pk-hc"><div class="pk-hn">6</div><div class="pk-hb" style="height: 17.7049px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">2</div></div><div class="pk-hc"><div class="pk-hn">5</div><div class="pk-hb" style="height: 14.7541px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">3</div></div><div class="pk-hc"><div class="pk-hn">9</div><div class="pk-hb" style="height: 26.5574px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">4</div></div><div class="pk-hc"><div class="pk-hn">7</div><div class="pk-hb" style="height: 20.6557px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">5</div></div><div class="pk-hc"><div class="pk-hn">11</div><div class="pk-hb" style="height: 32.459px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">6</div></div><div class="pk-hc"><div class="pk-hn">50</div><div class="pk-hb" style="height: 147.541px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">7</div></div><div class="pk-hc"><div class="pk-hn">61</div><div class="pk-hb" style="height: 180px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">8</div></div><div class="pk-hc"><div class="pk-hn">44</div><div class="pk-hb" style="height: 129.836px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">9</div></div><div class="pk-hc"><div class="pk-hn">43</div><div class="pk-hb" style="height: 126.885px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">10</div></div><div class="pk-hc"><div class="pk-hn">28</div><div class="pk-hb" style="height: 82.623px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">11</div></div><div class="pk-hc"><div class="pk-hn">38</div><div class="pk-hb" style="height: 112.131px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">12</div></div><div class="pk-hc"><div class="pk-hn">50</div><div class="pk-hb" style="height: 147.541px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">13</div></div><div class="pk-hc"><div class="pk-hn">28</div><div class="pk-hb" style="height: 82.623px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">14</div></div><div class="pk-hc"><div class="pk-hn">18</div><div class="pk-hb" style="height: 53.1148px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">15</div></div><div class="pk-hc"><div class="pk-hn">24</div><div class="pk-hb" style="height: 70.8197px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">16</div></div><div class="pk-hc"><div class="pk-hn">17</div><div class="pk-hb" style="height: 50.1639px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">17</div></div><div class="pk-hc"><div class="pk-hn">18</div><div class="pk-hb" style="height: 53.1148px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">18</div></div><div class="pk-hc"><div class="pk-hn">21</div><div class="pk-hb" style="height: 61.9672px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">19</div></div><div class="pk-hc"><div class="pk-hn">25</div><div class="pk-hb" style="height: 73.7705px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">20</div></div><div class="pk-hc"><div class="pk-hn">38</div><div class="pk-hb" style="height: 112.131px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">21</div></div><div class="pk-hc"><div class="pk-hn">23</div><div class="pk-hb" style="height: 67.8689px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">22</div></div><div class="pk-hc"><div class="pk-hn">18</div><div class="pk-hb" style="height: 53.1148px; background: var(--cds-chart-categorical-1);"></div><div class="pk-hl">23</div></div></div></div>
+  </div>
+</section>
+
+<section id="s02" class="pk-break">
+  <h2>02 怎麼玩、怎麼花</h2>
+  <p class="pk-sub">第 2 題問「從開始玩到現在，偷偷花了多少」。</p>
+
+  <div class="pk-grid">
+    <div class="pk-card">
+      <h3>還在玩的人</h3>
+      <p><b data-key="playFreePct">58.8%</b> 選「一毛沒花，全靠雙腳」；<b data-key="playSpendPct">41.2%</b> 有花；<b data-key="play2kPct">10.5%</b> 花到 2,000 元以上（<b data-key="play2kN">31</b> 人）。分母是還在玩的 <b data-key="playN">294</b> 人。</p>
+    </div>
+    <div class="pk-card">
+      <h3>天天開 vs 順便走</h3>
+      <p>花到 2,000 元以上：每天報到型 <b data-key="ev2kPct">11.6%</b>，順便走型 <b data-key="si2kPct">7.2%</b>。順便走型選「一毛沒花」的有 <b data-key="siFreePct">72.5%</b>。</p>
+    </div>
+    <div class="pk-card">
+      <h3>退坑的人</h3>
+      <p>退坑型有 <b data-key="exFreePct">77.8%</b> 選「一毛沒花」（<b data-key="n_ex">45</b> 人）。</p>
+    </div>
+  </div>
+
+  <div class="pk-card" id="agespend-card">
+    <h3>各年齡層：玩不玩、花不花</h3>
+    <p class="pk-cap">年齡分四組（每 10 歲一組人數太少）。「還在玩」的分母是該年齡層的人；「有花錢」「花 2,000 元以上」的分母是該年齡層還在玩的人。＊ 表示分母不到 30 人。顏色越明顯，占比越高。</p>
+    <div class="pk-tw"><div style="min-height:11rem"><table class="pk-tbl"><tr><th>年齡層</th><th>人數</th><th>還在玩</th><th>玩家：有花錢</th><th>玩家：花 2,000 元以上</th></tr><tr><td>15–34 歲</td><td>63</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 31%, transparent);">52.4%（33/63）</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 24%, transparent);">39.4%（13/33）</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 4%, transparent);">6.1%（2/33）</td></tr><tr><td>35–44 歲</td><td>80</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 29%, transparent);">48.8%（39/80）</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 28%, transparent);">46.2%（18/39）</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 5%, transparent);">7.7%（3/39）</td></tr><tr><td>45–64 歲</td><td>313</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 35%, transparent);">57.8%（181/313）</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 25%, transparent);">42.0%（76/181）</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 7%, transparent);">11.0%（20/181）</td></tr><tr><td>65 歲以上</td><td>55</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 16%, transparent);">27.3%（15/55）</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 12%, transparent);">20.0%＊（3/15）</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 4%, transparent);">6.7%＊（1/15）</td></tr></table></div></div>
+  </div>
+
+  <div class="pk-card" id="heat-card">
+    <h3>處境 × 花費</h3>
+    <p class="pk-cap">每一列加起來是 100%。顏色越明顯，占比越高。第 1、2 題各自作答，少數人兩題不一致，例如旁觀型有 <b data-key="sdFreePct">10.0%</b> 選了「一毛沒花」。</p>
+    <div class="pk-tw"><div style="min-height:14rem"><table class="pk-tbl"><tr><th>處境</th><th>沒在玩</th><th>一毛沒花</th><th>500 元內</th><th>500–2,000 元</th><th>2,000 元以上</th><th>人數</th></tr><tr><td>每天報到型</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 0%, transparent);">0%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 33%, transparent);">55%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 12%, transparent);">20%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 8%, transparent);">14%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 7%, transparent);">12%</td><td>225</td></tr><tr><td>順便走型</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 0%, transparent);">0%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 44%, transparent);">73%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 9%, transparent);">15%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 3%, transparent);">6%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 4%, transparent);">7%</td><td>69</td></tr><tr><td>退坑型</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 7%, transparent);">11%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 47%, transparent);">78%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 1%, transparent);">2%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 3%, transparent);">4%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 3%, transparent);">4%</td><td>45</td></tr><tr><td>旁觀型</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 54%, transparent);">89%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 6%, transparent);">10%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 0%, transparent);">0%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 0%, transparent);">0%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 0%, transparent);">1%</td><td>120</td></tr><tr><td>沒聽過型</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 57%, transparent);">95%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 2%, transparent);">3%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 0%, transparent);">0%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 0%, transparent);">1%</td><td style="background: color-mix(in srgb, var(--cds-chart-categorical-1) 0%, transparent);">1%</td><td>149</td></tr></table></div></div>
+  </div>
+
+  <div class="pk-card" id="gender-card">
+    <h3>男女比較</h3>
+    <p class="pk-cap">女 <b data-key="gF">428</b> 人、男 <b data-key="gM">102</b> 人有填性別。不透露 <b data-key="gX">68</b> 人、其他／非二元 <b data-key="gO">2</b> 人，不列入比較。差異用兩比例 z 檢定，95% 顯著才標「達 95% 顯著」。</p>
+    <p>還在玩：女 <b data-key="fPlay">55.8%</b>、男 <b data-key="mPlay">39.2%</b>。沒聽過型：女 <b data-key="fNv">19.2%</b>、男 <b data-key="mNv">34.3%</b>。進場之後花不花錢，男女差異沒有達到顯著，男性玩家只有 <b data-key="mPlayN">40</b> 人。</p>
+    <div style="min-height:20rem"><div class="pk-g" style="position: relative;"><div class="pk-legend"><span><i style="background: var(--cds-chart-categorical-1);"></i>女</span><span><i style="background: var(--cds-chart-categorical-2);"></i>男</span></div><div class="pk-tip"></div><div class="pk-grow"><div class="pk-gl">還在玩<small>女 428 人／男 102 人</small></div><div class="pk-gb"><div class="pk-gbr"><div>女</div><div class="pk-track"><div class="pk-fill" style="width: 55.8%; background: var(--cds-chart-categorical-1);"></div></div><div>55.8%</div></div><div class="pk-gbr"><div>男</div><div class="pk-track"><div class="pk-fill" style="width: 39.2%; background: var(--cds-chart-categorical-2);"></div></div><div>39.2%</div></div></div><div class="pk-badge on">達 95% 顯著</div></div><div class="pk-grow"><div class="pk-gl">每天報到型<small>女 428 人／男 102 人</small></div><div class="pk-gb"><div class="pk-gbr"><div>女</div><div class="pk-track"><div class="pk-fill" style="width: 44.4%; background: var(--cds-chart-categorical-1);"></div></div><div>44.4%</div></div><div class="pk-gbr"><div>男</div><div class="pk-track"><div class="pk-fill" style="width: 25.5%; background: var(--cds-chart-categorical-2);"></div></div><div>25.5%</div></div></div><div class="pk-badge on">達 95% 顯著</div></div><div class="pk-grow"><div class="pk-gl">順便走型<small>女 428 人／男 102 人</small></div><div class="pk-gb"><div class="pk-gbr"><div>女</div><div class="pk-track"><div class="pk-fill" style="width: 11.4%; background: var(--cds-chart-categorical-1);"></div></div><div>11.4%</div></div><div class="pk-gbr"><div>男</div><div class="pk-track"><div class="pk-fill" style="width: 13.7%; background: var(--cds-chart-categorical-2);"></div></div><div>13.7%</div></div></div><div class="pk-badge">未達顯著</div></div><div class="pk-grow"><div class="pk-gl">退坑型<small>女 428 人／男 102 人</small></div><div class="pk-gb"><div class="pk-gbr"><div>女</div><div class="pk-track"><div class="pk-fill" style="width: 7.5%; background: var(--cds-chart-categorical-1);"></div></div><div>7.5%</div></div><div class="pk-gbr"><div>男</div><div class="pk-track"><div class="pk-fill" style="width: 8.8%; background: var(--cds-chart-categorical-2);"></div></div><div>8.8%</div></div></div><div class="pk-badge">未達顯著</div></div><div class="pk-grow"><div class="pk-gl">旁觀型<small>女 428 人／男 102 人</small></div><div class="pk-gb"><div class="pk-gbr"><div>女</div><div class="pk-track"><div class="pk-fill" style="width: 17.5%; background: var(--cds-chart-categorical-1);"></div></div><div>17.5%</div></div><div class="pk-gbr"><div>男</div><div class="pk-track"><div class="pk-fill" style="width: 17.6%; background: var(--cds-chart-categorical-2);"></div></div><div>17.6%</div></div></div><div class="pk-badge">未達顯著</div></div><div class="pk-grow"><div class="pk-gl">沒聽過型<small>女 428 人／男 102 人</small></div><div class="pk-gb"><div class="pk-gbr"><div>女</div><div class="pk-track"><div class="pk-fill" style="width: 19.2%; background: var(--cds-chart-categorical-1);"></div></div><div>19.2%</div></div><div class="pk-gbr"><div>男</div><div class="pk-track"><div class="pk-fill" style="width: 34.3%; background: var(--cds-chart-categorical-2);"></div></div><div>34.3%</div></div></div><div class="pk-badge on">達 95% 顯著</div></div><div class="pk-grow"><div class="pk-gl">玩家中，有花錢<small>女 239 人／男 40 人</small></div><div class="pk-gb"><div class="pk-gbr"><div>女</div><div class="pk-track"><div class="pk-fill" style="width: 43.5%; background: var(--cds-chart-categorical-1);"></div></div><div>43.5%</div></div><div class="pk-gbr"><div>男</div><div class="pk-track"><div class="pk-fill" style="width: 27.5%; background: var(--cds-chart-categorical-2);"></div></div><div>27.5%</div></div></div><div class="pk-badge">未達顯著</div></div><div class="pk-grow"><div class="pk-gl">玩家中，花 2,000 元以上<small>女 239 人／男 40 人</small></div><div class="pk-gb"><div class="pk-gbr"><div>女</div><div class="pk-track"><div class="pk-fill" style="width: 11.3%; background: var(--cds-chart-categorical-1);"></div></div><div>11.3%</div></div><div class="pk-gbr"><div>男</div><div class="pk-track"><div class="pk-fill" style="width: 10%; background: var(--cds-chart-categorical-2);"></div></div><div>10.0%</div></div></div><div class="pk-badge">未達顯著</div></div></div></div>
+  </div>
+  <p class="pk-note">這份問卷沒有開放題，所以沒有文字歸類。</p>
+</section>
+
+<section id="s03" class="pk-break">
+  <h2>03 讀者的問題</h2>
+  <p class="pk-sub">用讀者的口氣。每張卡只寫問卷怎麼說。</p>
+  <div class="pk-grid">
+    <div class="pk-card"><p class="pk-q">「皮克敏是什麼？」</p><p><b data-key="pct_nv">24.5%</b>（<b data-key="n_nv">149</b> 人）選了這一句。</p></div>
+    <div class="pk-card"><p class="pk-q">「身邊有人在玩，我呢？」</p><p><b data-key="pct_sd">19.7%</b>（<b data-key="n_sd">120</b> 人）沒玩，但身邊有人在玩。</p></div>
+    <div class="pk-card"><p class="pk-q">「抓過了，後來呢？」</p><p><b data-key="pct_ex">7.4%</b>（<b data-key="n_ex">45</b> 人）抓過一陣子，現在在手機裡躺著。</p></div>
+    <div class="pk-card"><p class="pk-q">「順便走，要花錢嗎？」</p><p>順便走型 <b data-key="siFreePct">72.5%</b> 選「一毛沒花」（<b data-key="n_si">69</b> 人）。</p></div>
+    <div class="pk-card"><p class="pk-q">「天天開的人，花多少？」</p><p>每天報到型 <b data-key="ev2kPct">11.6%</b> 花到 2,000 元以上（<b data-key="n_ev">225</b> 人）。</p></div>
+  </div>
+</section>
+
+<section id="s04">
+  <h2>04 缺口與未知</h2>
+  <p class="pk-sub">每個缺口寫三件事：問卷怎麼說、牽動的領域、還不知道。</p>
+
+  <div class="pk-card">
+    <h3>沒接觸的人</h3>
+    <dl class="pk-gap">
+      <dt>問卷怎麼說</dt><dd>沒聽過型 <b data-key="pct_nv">24.5%</b>，旁觀型 <b data-key="pct_sd">19.7%</b>。65–74 歲的沒聽過型占 <b data-key="age65nv">51.0%</b>。</dd>
+      <dt>牽動的領域</dt><dd>手機遊戲、戶外走路、新玩法在不同年齡層的認識度</dd>
+      <dt>還不知道</dt><dd>沒接觸是不知道、沒興趣，還是手機用法不同；有沒有玩過別的手機遊戲</dd>
+    </dl>
+  </div>
+  <div class="pk-card">
+    <h3>玩的人怎麼花</h3>
+    <dl class="pk-gap">
+      <dt>問卷怎麼說</dt><dd>還在玩的人 <b data-key="playSpendPct">41.2%</b> 有花錢，<b data-key="play2kPct">10.5%</b> 花到 2,000 元以上。</dd>
+      <dt>牽動的領域</dt><dd>手機遊戲內購、行動消費</dd>
+      <dt>還不知道</dt><dd>錢花在什麼上、一年或一個月花多少、同一批人在遊戲以外的花費</dd>
+    </dl>
+  </div>
+  <div class="pk-card">
+    <h3>45–64 歲的玩家</h3>
+    <dl class="pk-gap">
+      <dt>問卷怎麼說</dt><dd>45–64 歲 <b data-key="m45PlayPct">57.8%</b> 還在玩，玩的人 <b data-key="m45SpendPct">42.0%</b> 花過錢（<b data-key="m45SpendN">76</b> 人），<b data-key="m452kPct">11.0%</b> 花到 2,000 元以上。</dd>
+      <dt>牽動的領域</dt><dd>中高齡的手機遊戲、行動消費、走路與日常運動</dd>
+      <dt>還不知道</dt><dd>他們原本有沒有玩手遊的習慣、是被誰帶進場、為什麼花、花在哪；玩這個遊戲跟健康或走路的動機有沒有關</dd>
+    </dl>
+  </div>
+  <div class="pk-card">
+    <h3>退坑的人</h3>
+    <dl class="pk-gap">
+      <dt>問卷怎麼說</dt><dd>退坑型 <b data-key="pct_ex">7.4%</b>，其中 <b data-key="exFreePct">77.8%</b> 一毛沒花。</dd>
+      <dt>牽動的領域</dt><dd>手機遊戲的留存、日常習慣</dd>
+      <dt>還不知道</dt><dd>什麼時候停的、為什麼停、會不會回來</dd>
+    </dl>
+  </div>
+  <div class="pk-card">
+    <h3>還沒驗證的方向</h3>
+    <p>以下是看數字後的推測，問卷沒有直接問：</p>
+    <p>65 歲以上接觸較少（還在玩 <b data-key="a65Pct">27.3%</b>，<b data-key="a65N">55</b> 人），可能跟手機使用習慣有關。走路與健康生活有沒有連結，問卷沒問步數與運動習慣。玩不玩與讀者平常讀哪類文章有沒有關，這份問卷沒有逐篇紀錄。</p>
+  </div>
+  <div class="pk-card">
+    <h3>問卷之外</h3>
+    <p>預算、購買、品牌偏好、居住地、玩的頻率與時數、實際步數、職業與家庭。以上都還不知道。</p>
+  </div>
+</section>
+
+<section id="s05">
+  <h2>05 這群 TA 是誰</h2>
+  <p class="pk-one">45–64 歲占 <b data-key="ageMid">61.3%</b>，是這份問卷的主體。這個年齡層裡，<b data-key="m45PlayPct">57.8%</b> 還在玩，玩的人有 <b data-key="m45SpendPct">42.0%</b> 花過錢，<b data-key="m452kPct">11.0%</b> 花到 2,000 元以上。</p>
+  <p class="pk-note">這是願意填皮克敏問卷的讀者，不代表所有 45–64 歲。</p>
+  <div class="pk-grid">
+    <div class="pk-card"><h3>45–64 歲會玩，也會花</h3><p><b data-key="m45n">313</b> 人裡有 <b data-key="m45Play">181</b> 人還在玩，其中 <b data-key="m45SpendN">76</b> 人花過錢。花到 2,000 元以上、且有年齡資料的 <b data-key="k2All">26</b> 人裡，<b data-key="k2Mid">20</b> 人在這個年齡層。</p></div>
+    <div class="pk-card"><h3>差在碰不碰</h3><p>男女的差距在有沒有接觸（沒聽過型男 <b data-key="mNv">34.3%</b>、女 <b data-key="fNv">19.2%</b>），進場之後的花費沒有顯著差異。</p></div>
+    <div class="pk-card"><h3>年齡拉開接觸</h3><p>65–74 歲的沒聽過型占 <b data-key="age65nv">51.0%</b>；每天報到型集中在 45–64 歲。</p></div>
+    <div class="pk-card"><h3>早上最熱</h3><p>7–9 點的回覆占 <b data-key="m79Pct">25.5%</b>。</p></div>
+  </div>
+  <div class="pk-card">
+    <h3>帶著想的問題</h3>
+    <p>不在玩的那些人，是不知道，還是不想？花到 2,000 元以上的那一小群，是誰？每天出門都開的人，一天走多少？</p>
+  </div>
+  <div class="pk-card">
+    <h3>這份報告還沒回答的</h3>
+    <p>誰在花、花在哪、為什麼退坑、身邊在玩的是誰、玩到什麼程度。問卷已於 10/29 結束收件。</p>
+  </div>
+</section>
+
+<footer class="pk-foot" id="foot">
+  <p><b>樣本限制</b>　自願填答、cookie 防重複（以瀏覽器計，非真人）、偏特定族群。一律當讀者輪廓看，不乘回 MAU，不代表全站。性別未填 <b data-key="gNone">8</b> 人。</p>
+  <p><b>分組規則</b>　依第 1 題的選項分成五組，每人只屬一組。出生年換算成年齡，落在 15–95 歲以外視為異常，留空。「＊」表示該組不到 30 人。</p>
+  <p><b>站台規模</b>　站台流量，非問卷資料。</p>
+</footer>
+</div>
+
+
+
+
+
+
+</div>
+<script>document.querySelectorAll('[data-go]').forEach(function(b){b.addEventListener('click',function(){var t=document.getElementById(b.dataset.go);if(t)t.scrollIntoView({behavior:'smooth'})})})</script>
+</body></html>
