@@ -158,6 +158,55 @@ footer{font-size:12.5px;color:var(--mute);border-top:1px solid var(--line);paddi
   "links": []
  },
  {
+  "name": "買車問卷｜三站比較",
+  "ip": "三站比較",
+  "placement": "同一份問卷，三個 IP 並排比較",
+  "question": "明年，你想買哪一台車？",
+  "start": "2026-11-11",
+  "end": "2026-11-23",
+  "total": 8185,
+  "compare": true,
+  "tagline": "黃金線是愛車男性、健康2.0 是 50 歲以上女性、新聞網最大群；三站各買哪一台。",
+  "url": "reports/car-compare.html",
+  "links": []
+ },
+ {
+  "name": "買車問卷（地球黃金線）",
+  "ip": "地球黃金線",
+  "placement": "地球黃金線 文章內",
+  "question": "明年，你想買哪一台車？",
+  "start": "2026-11-11",
+  "end": "2026-11-15",
+  "total": 2033,
+  "tagline": "幾乎都是男生；65% 明年會買車，下一台多半是油電（48%）。",
+  "url": "reports/car-gold.html",
+  "links": []
+ },
+ {
+  "name": "買車問卷（健康2.0）",
+  "ip": "健康2.0",
+  "placement": "健康2.0 文章內",
+  "question": "明年，你想買哪一台車？",
+  "start": "2026-11-11",
+  "end": "2026-11-23",
+  "total": 1080,
+  "tagline": "讀健康文章的人，女生 61%；31% 明年會買車，油電最多（37%）。",
+  "url": "reports/car-health.html",
+  "links": []
+ },
+ {
+  "name": "買車問卷（TVBS新聞網）",
+  "ip": "TVBS新聞網",
+  "placement": "TVBS新聞網 全站",
+  "question": "明年，你想買哪一台車？",
+  "start": "2026-11-11",
+  "end": "2026-11-15",
+  "total": 5072,
+  "tagline": "略偏男、40 歲上下；38% 明年會買車，下一台多半是油電（36%）。",
+  "url": "reports/car-news.html",
+  "links": []
+ },
+ {
   "name": "演唱會問卷",
   "ip": "TVBS新聞網",
   "channel": "娛樂",
@@ -315,8 +364,8 @@ footer{font-size:12.5px;color:var(--mute);border-top:1px solid var(--line);paddi
   }
 
   function renderStats(){
-    var n=docs.length, t=0, lo=Infinity, hi=-Infinity;
-    docs.forEach(function(d){t+=Number(d.total)||0;lo=Math.min(lo,day(d.start));hi=Math.max(hi,day(d.end))});
+    var n=docs.filter(function(d){return !d.compare}).length, t=0, lo=Infinity, hi=-Infinity;
+    docs.forEach(function(d){if(!d.compare)t+=Number(d.total)||0;lo=Math.min(lo,day(d.start));hi=Math.max(hi,day(d.end))});
     document.getElementById('s-n').textContent=n?String(n):'0';
     document.getElementById('s-t').textContent=n?fmt(t):'0';
     document.getElementById('s-r').textContent=n?(md(new Date(lo*DAY).toISOString().slice(0,10))+' – '+md(new Date(hi*DAY).toISOString().slice(0,10))):'—';
